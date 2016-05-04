@@ -2,7 +2,7 @@
 #include "..\Utility.h"
 #include <string>
 #include <vector>
-#include <glm\glm.hpp>
+#include "../Math.h"
 
 namespace garm { namespace graphics {
 

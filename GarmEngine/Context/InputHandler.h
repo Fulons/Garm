@@ -1,6 +1,6 @@
 #pragma once
 
-#include <glm\glm.hpp>
+#include "../Math.h"
 
 #define NUM_KEYS 255
 

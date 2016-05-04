@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="Context\Context.cpp" />
     <ClCompile Include="Context\InputHandler.cpp" />
+    <ClCompile Include="Graphics\Group2D.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
     <ClCompile Include="Graphics\Layer.cpp" />
     <ClCompile Include="Graphics\Mesh2D.cpp" />
@@ -136,7 +137,9 @@
   <ItemGroup>
     <ClInclude Include="Context\Context.h" />
     <ClInclude Include="Context\InputHandler.h" />
+    <ClInclude Include="Graphics\Group2D.h" />
     <ClInclude Include="Graphics\Layer.h" />
+    <ClInclude Include="Math.h" />
     <ClInclude Include="Graphics\Mesh2D.h" />
     <ClInclude Include="Graphics\IndexBuffer.h" />
     <ClInclude Include="Graphics\Renderable2D.h" />

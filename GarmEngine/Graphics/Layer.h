@@ -1,5 +1,6 @@
 #pragma once
-#include <glm/glm.hpp>
+
+#include "../Math.h"
 #include <vector>
 namespace garm { namespace graphics {
 

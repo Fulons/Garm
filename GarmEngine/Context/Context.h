@@ -1,10 +1,10 @@
 #pragma once
 #include "../Utility.h"
-#include <gl\glew.h>
-#include <gl\GL.h>
-#include <gl\GLU.h>
-#include <gl\glext.h>
-#include <gl\wglext.h>
+#include <gl/glew.h>
+#include <gl/GL.h>
+#include <gl/GLU.h>
+#include <gl/glext.h>
+#include <gl/wglext.h>
 
 
 namespace garm {

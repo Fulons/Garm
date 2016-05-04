@@ -8,10 +8,10 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/Layer.h"
 
+#include "Math.h"
+
 #include <iostream>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
+
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -130,7 +130,7 @@ void TestApp::Render() {
 	glm::vec2 mousepos(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
 	mousepos.x /= GetClientWidth();
 	mousepos.y /= GetClientHeight();
-	renderable->rotate(glm::rotate(glm::quat(), 0.1f, glm::vec3(0.0f, 0.0f, 1.0f)));
+	renderable->rotate(glm::rotate(glm::quat(), 0.001f, glm::vec3(0.0f, 0.0f, 1.0f)));
 	mousepos = (mousepos * glm::vec2(16.0f, 12.0f) - glm::vec2(8.0f, 6.0f));
 	layer->GetShader()->SetUniform("mouse", mousepos);
 	layer->OnRender();

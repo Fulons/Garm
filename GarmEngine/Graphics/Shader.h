@@ -1,7 +1,8 @@
 #pragma once
+#include "../Math.h"
+
 #include <GL/glew.h>
 #include <string>
-#include <glm\glm.hpp>
 #include <map>
 
 namespace garm { namespace graphics {

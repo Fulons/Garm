@@ -1,5 +1,6 @@
 #include "Mesh2D.h"
 #include "VertexArray.h"
+
 namespace garm { namespace graphics {
 
 	Mesh2D::Mesh2D(Vertex2D * verts, unsigned int numVerts, IndexBuffer* ib, bool generateVA) 
