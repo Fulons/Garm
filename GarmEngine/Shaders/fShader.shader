@@ -9,6 +9,6 @@ in vec4 pos;
 
 
 void main() {
-	float intensity = 50.0f / length(pos.xy - mouse);
+	float intensity = max(1.0f / length(pos.xy - mouse), 1.0f);
 	color = vec4(out_color, 1.0f) * intensity;
 }

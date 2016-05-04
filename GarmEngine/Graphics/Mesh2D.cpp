@@ -14,6 +14,10 @@ namespace garm { namespace graphics {
 		m_va = new VertexArray(vb, ib);
 	}
 
+	Mesh2D::~Mesh2D(){
+		if (m_va) delete m_va;
+	}
+
 	void Mesh2D::SetupVertexArray() {
 		VertexBuffer* vb = new VertexBuffer(GL_STATIC_DRAW);
 		BufferAttribLayout layout;

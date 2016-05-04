@@ -5,6 +5,28 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include "Shader.h"
+
+/////Console command class?
+//must take a name++
+//implement a way to notify on change
+template <typename T>
+	class CommandVar{
+		T var;
+	public:
+
+		template <typename T>
+		operator T() const {
+			return var;
+		}
+
+		template <typename T>
+		CommandVar<T>& operator =(T value) {
+			var = value;
+			return *this;
+		}
+	};
+
+
 namespace garm { namespace graphics {
 	/*
 	struct Vertex2D {
@@ -92,6 +114,7 @@ namespace garm { namespace graphics {
 	class Layer2D : public Layer {
 		Renderer2D* m_renderer;
 		std::vector<Renderable2D*> m_renderables;
+		bool m_visible;
 	public:
 		Layer2D(Renderer2D* renderer){}
 		virtual void OnInit() {}

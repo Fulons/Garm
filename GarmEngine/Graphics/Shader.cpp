@@ -14,7 +14,8 @@ namespace garm {namespace graphics {
 
 
 	Shader::~Shader(){
-
+		glUseProgram(0);
+		glDeleteProgram(m_programID);
 	}
 
 	void Shader::Use() {

@@ -13,6 +13,8 @@ namespace garm { namespace graphics {
 	VertexArray::~VertexArray() {
 		m_vertexBuffer->Unbind();
 		glDeleteVertexArrays(1, &m_bufferID);
+		delete m_vertexBuffer;
+		if (m_IndexBuffer) delete m_IndexBuffer;
 	}
 
 	void VertexArray::Bind(){

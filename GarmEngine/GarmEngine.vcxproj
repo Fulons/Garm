@@ -123,8 +123,10 @@
     <ClCompile Include="Context\Context.cpp" />
     <ClCompile Include="Context\InputHandler.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
+    <ClCompile Include="Graphics\Layer.cpp" />
     <ClCompile Include="Graphics\Mesh2D.cpp" />
     <ClCompile Include="Graphics\Renderable2D.cpp" />
+    <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\VertexArray.cpp" />
     <ClCompile Include="Graphics\VertexBuffer.cpp" />
     <ClCompile Include="main.cpp" />
@@ -134,10 +136,12 @@
   <ItemGroup>
     <ClInclude Include="Context\Context.h" />
     <ClInclude Include="Context\InputHandler.h" />
+    <ClInclude Include="Graphics\Layer.h" />
     <ClInclude Include="Graphics\Mesh2D.h" />
     <ClInclude Include="Graphics\IndexBuffer.h" />
     <ClInclude Include="Graphics\Renderable2D.h" />
-    <ClInclude Include="Graphics\Renderer2D.h" />
+    <ClInclude Include="Graphics\Renderer.h" />
+    <ClInclude Include="Graphics\Notes.txt" />
     <ClInclude Include="Graphics\VertexArray.h" />
     <ClInclude Include="Graphics\VertexBuffer.h" />
     <ClInclude Include="platform.h" />

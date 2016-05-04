@@ -23,6 +23,7 @@ namespace garm { namespace graphics {
 		Mesh2D(Vertex2D* verts, unsigned int numVerts, IndexBuffer* ib = nullptr, bool generateVA = false);
 		Mesh2D(VertexArray* va);
 		Mesh2D(VertexBuffer* vb, IndexBuffer* ib = nullptr);
+		~Mesh2D();
 		void SetupVertexArray();
 		//render and if necessary create the vertexarray
 		void Render();
