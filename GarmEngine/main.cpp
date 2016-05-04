@@ -6,10 +6,15 @@
 #include "Graphics/Mesh2D.h"
 #include "Graphics/Renderable2D.h"
 #include "Graphics/Renderer.h"
+#include "Graphics/Layer.h"
 
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
+
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 
 class TestApp : public garm::Context {
@@ -50,6 +55,7 @@ garm::graphics::Renderable2D* renderable2;
 garm::graphics::Renderable2D* renderable3;
 garm::graphics::Renderable2D* renderable4;
 garm::graphics::Simple2DRenderer* renderer;
+garm::graphics::Simple2DLayer* layer;
 
 bool TestApp::Init(){
 	if (!Context::Init()) return false;
@@ -83,20 +89,15 @@ bool TestApp::Init(){
 	//glm::mat4 translation = glm::translate(glm::mat4(1), glm::vec3(400.0f, 300.0f, 0.0f));
 	//glm::mat4 model = glm::scale(translation, glm::vec3(200, 200, 0.0f));
 	glm::mat4 projection = glm::ortho(-8.0f, 8.0f, -6.0f, 6.0f);
-	////shader->SetUniform("m", model);
 	shader->SetUniform("p", projection);
-	//vb = new garm::graphics::VertexBuffer(GL_STATIC_DRAW);
+
 	ib = new garm::graphics::IndexBuffer(indices, 6);
-	//garm::graphics::BufferAttribLayout layout;
-	//layout.Push<glm::vec3>("Position");
-	//layout.Push<glm::vec4>("Color");
-	//layout.Push<glm::vec2>("UV");
-	//vb->SetData(sizeof(vertex), vertex, layout);
-	//va = new garm::graphics::VertexArray(vb, ib);
+
 
 	mesh = new garm::graphics::Mesh2D(vertex, 4, ib, true);
 	renderable = new garm::graphics::Renderable2D(mesh);
 	renderable->setPosition(glm::vec3(glm::vec3(1.0f, 1.0f, 0.0f)));
+	
 	renderable2 = new garm::graphics::Renderable2D(mesh);
 	renderable2->setPosition(glm::vec3(glm::vec3(1.0f, -1.0f, 0.0f)));
 	renderable3 = new garm::graphics::Renderable2D(mesh);
@@ -106,8 +107,14 @@ bool TestApp::Init(){
 
 	renderer = new garm::graphics::Simple2DRenderer;
 
+	layer = new garm::graphics::Simple2DLayer(projection);
+	layer->AddRenderable(renderable);
+	layer->AddRenderable(renderable2);
+	layer->AddRenderable(renderable3);
+	layer->AddRenderable(renderable4);
+
 	CheckGLError();
-	
+	glEnable(GL_DEPTH_TEST);
 	return true;
 }
 
@@ -123,13 +130,10 @@ void TestApp::Render() {
 	glm::vec2 mousepos(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
 	mousepos.x /= GetClientWidth();
 	mousepos.y /= GetClientHeight();
+	renderable->rotate(glm::rotate(glm::quat(), 0.1f, glm::vec3(0.0f, 0.0f, 1.0f)));
 	mousepos = (mousepos * glm::vec2(16.0f, 12.0f) - glm::vec2(8.0f, 6.0f));
-	shader->SetUniform("mouse", mousepos);
-	renderer->Begin();
-	renderer->Submit(renderable);
-	renderer->Submit(renderable2);
-	renderer->Submit(renderable3);
-	renderer->Submit(renderable4);
-	renderer->Render(shader);
+	layer->GetShader()->SetUniform("mouse", mousepos);
+	layer->OnRender();
+
 	CheckGLError();
 }
