@@ -8,6 +8,7 @@ uniform mat4 m, v, p;
 
 out vec3 out_color;
 out vec4 pos;
+out vec2 texCoord;
 
 void main() {
 	out_color = color;

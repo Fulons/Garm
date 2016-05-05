@@ -7,6 +7,8 @@
 #include "Graphics/Renderable2D.h"
 #include "Graphics/Renderer.h"
 #include "Graphics/Layer.h"
+#include "Graphics/Group2D.h"
+#include "Graphics/Texture.h"
 
 #include "Math.h"
 
@@ -50,12 +52,13 @@ garm::graphics::VertexBuffer* vb;
 garm::graphics::IndexBuffer* ib;
 garm::graphics::VertexArray* va;
 garm::graphics::Mesh2D* mesh;
-garm::graphics::Renderable2D* renderable;
+garm::graphics::Group2D* renderable;
 garm::graphics::Renderable2D* renderable2;
 garm::graphics::Renderable2D* renderable3;
 garm::graphics::Renderable2D* renderable4;
 garm::graphics::Simple2DRenderer* renderer;
 garm::graphics::Simple2DLayer* layer;
+garm::graphics::Texture* texture;
 
 bool TestApp::Init(){
 	if (!Context::Init()) return false;
@@ -63,21 +66,21 @@ bool TestApp::Init(){
 	shader->Use();
 	garm::graphics::Vertex2D vertex[] = {
 		{
-		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(-0.5f, -0.5f, 0.0f),
 		glm::vec4(0.9f, 0.0f, 0.0f, 1.0f),
-		glm::vec2()
+		glm::vec2(0.0f, 0.0f)
 		},{
-		glm::vec3(1.0f, 0.0f, 0.0f),
+		glm::vec3(0.5f, -0.5f, 0.0f),
 		glm::vec4(0.0f, 0.9f, 0.0f, 1.0f),
-		glm::vec2()
+		glm::vec2(1.0f, 0.0f)
 		},{
-		glm::vec3(1.0f, 1.0f, 0.0f),
+		glm::vec3(0.5f, 0.5f, 0.0f),
 		glm::vec4(0.0f, 0.0f, 0.9f, 1.0f),
-		glm::vec2()
+		glm::vec2(1.0f, 1.0f)
 		},{
-		glm::vec3(0.0f, 1.0f, 0.0f),
+		glm::vec3(-0.5f, 0.5f, 0.0f),
 		glm::vec4(0.0f, 0.9f, 0.0f, 1.0f),
-		glm::vec2()
+		glm::vec2(0.0f, 1.0f)
 		}
 	};
 
@@ -93,25 +96,28 @@ bool TestApp::Init(){
 
 	ib = new garm::graphics::IndexBuffer(indices, 6);
 
-
+	texture = new garm::graphics::Texture("Textures/dot.png");
 	mesh = new garm::graphics::Mesh2D(vertex, 4, ib, true);
-	renderable = new garm::graphics::Renderable2D(mesh);
+	renderable = new garm::graphics::Group2D(mesh, texture);
 	renderable->setPosition(glm::vec3(glm::vec3(1.0f, 1.0f, 0.0f)));
 	
-	renderable2 = new garm::graphics::Renderable2D(mesh);
+	renderable2 = new garm::graphics::Renderable2D(mesh, texture);
 	renderable2->setPosition(glm::vec3(glm::vec3(1.0f, -1.0f, 0.0f)));
-	renderable3 = new garm::graphics::Renderable2D(mesh);
+	renderable3 = new garm::graphics::Renderable2D(mesh, texture);
 	renderable3->setPosition(glm::vec3(glm::vec3(-1.0f, 1.0f, 0.0f)));
-	renderable4 = new garm::graphics::Renderable2D(mesh);
+	renderable4 = new garm::graphics::Renderable2D(mesh, texture);
 	renderable4->setPosition(glm::vec3(glm::vec3(-1.0f, -1.0f, 0.0f)));
 
 	renderer = new garm::graphics::Simple2DRenderer;
-
+	
 	layer = new garm::graphics::Simple2DLayer(projection);
 	layer->AddRenderable(renderable);
-	layer->AddRenderable(renderable2);
-	layer->AddRenderable(renderable3);
-	layer->AddRenderable(renderable4);
+	renderable->AddRenderable(renderable2);
+	renderable->AddRenderable(renderable3);
+	renderable->AddRenderable(renderable4);
+	//layer->AddRenderable(renderable2);
+	//layer->AddRenderable(renderable3);
+	//layer->AddRenderable(renderable4);
 
 	CheckGLError();
 	glEnable(GL_DEPTH_TEST);
@@ -126,13 +132,16 @@ void TestApp::Render() {
 	glClearColor(0.05f, 0.075f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
 	glm::vec2 mousepos(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
 	mousepos.x /= GetClientWidth();
 	mousepos.y /= GetClientHeight();
-	renderable->rotate(glm::rotate(glm::quat(), 0.001f, glm::vec3(0.0f, 0.0f, 1.0f)));
+	if(garm::InputHandler::IsKeyDown(VK_SPACE))
+		renderable->rotate(glm::rotate(glm::quat(), 0.001f, glm::vec3(0.0f, 0.0f, 1.0f)));
+	if (garm::InputHandler::IsKeyDown(VK_RETURN))
+		renderable->setRotation(glm::quat());
 	mousepos = (mousepos * glm::vec2(16.0f, 12.0f) - glm::vec2(8.0f, 6.0f));
 	layer->GetShader()->SetUniform("mouse", mousepos);
+	layer->GetShader()->SetUniform("t", 1);
 	layer->OnRender();
 
 	CheckGLError();

@@ -6,11 +6,12 @@
 namespace garm { namespace graphics {
 
 	class Shader;
-
+	class Texture;
 	//TODO: transformation to be moved to its own component class when
 	//entity/component system is in
 	class Renderable2D {
 		Mesh2D* m_mesh;
+		Texture* m_texture;
 		glm::vec3 m_position;
 		glm::quat m_rotation = glm::quat(glm::vec3(0));
 		glm::vec2 m_scale = glm::vec2(1, 1);
@@ -22,7 +23,7 @@ namespace garm { namespace graphics {
 	protected:
 		virtual void TranslationChanged() { m_changed = true; }
 	public:
-		Renderable2D(Mesh2D* mesh);
+		Renderable2D(Mesh2D* mesh, Texture* texture = nullptr);
 		virtual void Render(Shader* shader);
 		virtual int GetNumRenderables() { return 1; }
 	virtual const glm::mat4& GetModelMatrix();

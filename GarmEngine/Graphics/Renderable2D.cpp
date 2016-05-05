@@ -1,12 +1,12 @@
 #include "Renderable2D.h"
 #include "Shader.h"
-
+#include "Texture.h"
 
 namespace garm { namespace graphics {
 
 
-	Renderable2D::Renderable2D(Mesh2D * mesh)
-	: m_mesh(mesh){
+	Renderable2D::Renderable2D(Mesh2D * mesh, Texture* texture)
+	: m_mesh(mesh), m_texture(texture){
 
 	}
 
@@ -21,6 +21,10 @@ namespace garm { namespace graphics {
 	}
 
 	void Renderable2D::Render(Shader * shader){
+		if (m_texture) {
+			m_texture->Bind(0);
+
+		}
 		if (m_changed) {
 			UpdateModelMatrix();
 		}

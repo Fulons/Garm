@@ -22,8 +22,10 @@ namespace garm { namespace graphics {
 
 	void Simple2DLayer::OnRender(){
 		m_shader->Use();
+		m_renderer->Begin();
 		for (Renderable2D* renderable : m_Renderables) {
-			renderable->Render(m_shader);
+			m_renderer->Submit(renderable);			
 		}
+		m_renderer->Render(m_shader);
 	}
 }}
