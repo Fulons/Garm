@@ -141,7 +141,6 @@ void TestApp::Render() {
 		renderable->setRotation(glm::quat());
 	mousepos = (mousepos * glm::vec2(16.0f, 12.0f) - glm::vec2(8.0f, 6.0f));
 	layer->GetShader()->SetUniform("mouse", mousepos);
-	layer->GetShader()->SetUniform("t", 1);
 	layer->OnRender();
 
 	CheckGLError();

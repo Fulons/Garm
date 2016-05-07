@@ -22,8 +22,9 @@ namespace garm { namespace graphics {
 		glGenTextures(1, &m_textureID);
 		glBindTexture(GL_TEXTURE_2D, m_textureID);
 		glTexImage2D(GL_TEXTURE_2D, 0, m_internalFormat, m_size.x, m_size.y, 0, m_type, GL_UNSIGNED_BYTE, image);
+		CheckGLError();
 		glGenerateMipmap(GL_TEXTURE_2D);
-
+		
 		// Parameters
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -35,8 +36,8 @@ namespace garm { namespace graphics {
 	}
 
 	void Texture::Bind(int slot){
-		glActiveTexture(GL_TEXTURE0 + slot);
 		glBindTexture(GL_TEXTURE_2D, m_textureID);
+		glActiveTexture(GL_TEXTURE0 + slot);
 	}
 
 } }
