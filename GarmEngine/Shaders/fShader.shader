@@ -11,7 +11,7 @@ in vec2 texCoord;
 
 
 void main() {
-	float intensity = max(1.0f / length(pos.xy - mouse), 1.0f);
+	float intensity = max(100.0f / length(pos.xy - mouse), 1.0f);
 	//color = vec4(out_color, 1.0f) * intensity;
-	color = texture(t, texCoord).r * vec4(out_color, 1.0f) * intensity;
+	color = vec4(out_color, texture(t, texCoord).r) * intensity;
 }

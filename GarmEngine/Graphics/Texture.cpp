@@ -15,6 +15,17 @@ namespace garm { namespace graphics {
 		LoadTexture(image);
 	}
 
+	Texture::Texture(GLubyte * image, glm::ivec2 size, short channels)
+	: m_size(size), m_channels(channels){
+		switch (m_channels) {
+		case SOIL_LOAD_L:		m_type = GL_RED;	m_internalFormat = GL_RED; break;
+		case SOIL_LOAD_LA:		m_type = GL_RG;		m_internalFormat = GL_RG; break;
+		case SOIL_LOAD_RGB:		m_type = GL_RGB;	m_internalFormat = GL_RGB; break;
+		case SOIL_LOAD_RGBA:	m_type = GL_RGBA;	m_internalFormat = GL_RGBA; break;
+		}
+		LoadTexture(image);
+	}
+
 	bool Texture::LoadTexture(GLubyte * image){
 		CheckGLError();
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);

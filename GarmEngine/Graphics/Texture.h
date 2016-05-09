@@ -14,6 +14,7 @@ namespace garm { namespace graphics {
 		GLint m_type;
 	public:
 		Texture(std::string path);
+		Texture(GLubyte* image, glm::ivec2 size, short channels);
 		glm::ivec2 GetSize() { return m_size; }
 		bool LoadTexture(GLubyte* image);
 		void Bind(int slot);

@@ -3,7 +3,7 @@
 
 namespace garm { namespace graphics {
 
-	Mesh2D::Mesh2D(Vertex2D * verts, unsigned int numVerts, IndexBuffer* ib, bool generateVA) 
+	Mesh2D::Mesh2D(Vertex * verts, unsigned int numVerts, IndexBuffer* ib, bool generateVA) 
 	: m_verts(verts), m_numVerts(numVerts), m_ib(ib) {
 		if (generateVA) SetupVertexArray();
 	}
@@ -25,7 +25,7 @@ namespace garm { namespace graphics {
 		layout.Push<glm::vec3>("POSITION");
 		layout.Push<glm::vec4>("COLOR");
 		layout.Push<glm::vec2>("UV");
-		vb->SetData(sizeof(Vertex2D) * m_numVerts, m_verts, layout);
+		vb->SetData(sizeof(Vertex) * m_numVerts, m_verts, layout);
 		m_va = new VertexArray(vb, m_ib);
 	}
 
