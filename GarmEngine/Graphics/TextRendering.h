@@ -1,9 +1,9 @@
 #pragma once
 #include "../Math.h"
+#include "Renderable2D.h"
 #include <gl/glew.h>
 #include <string>
 #include <map>
-
 
 namespace garm { namespace graphics {
 
@@ -17,11 +17,27 @@ namespace garm { namespace graphics {
 			GLuint advance;
 		};
 		std::map<char, Character> m_characters;
-		Texture* GetCharTexture(char c);
+		std::string m_path;
+
+		Character* GetCharacter(char c);
 
 	public:
 		Font(std::string path);
 		void PutStringInGroup(std::string string, Group2D* group);
+	};
+} }
+
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+
+namespace garm { namespace graphics {
+
+	class StringRenderable : public Renderable2D {
+		std::string m_string;
+		VertexBuffer m_vb;
+	public:
+		StringRenderable();
+		//virtual void Render(Shader* shader) override;
 	};
 
 } }

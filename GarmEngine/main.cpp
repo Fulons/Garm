@@ -10,11 +10,13 @@
 #include "Graphics/Group2D.h"
 #include "Graphics/Texture.h"
 #include "Graphics/Simple2DLayer.h"
-#include "Graphics/TextRendering.h"
+//#include "Graphics/TextRendering.h"
+#include "Graphics/MeshData.h"
 #include "Math.h"
+#include "Graphics/FontRenderable.h"
+#include "Graphics/FontMap.h"
 
 #include <iostream>
-
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -60,11 +62,16 @@ garm::graphics::Renderable2D* renderable4;
 garm::graphics::Simple2DRenderer* renderer;
 garm::graphics::Simple2DLayer* layer;
 garm::graphics::Texture* texture;
-garm::graphics::Font* font;
+//garm::graphics::Font* font;
+garm::graphics::FontRenderable* fontRenderable;
+garm::graphics::Buffer* buffer;
+
+GLuint VAO, VBO, IBO;
 
 bool TestApp::Init(){
 	if (!Context::Init()) return false;
-
+	garm::graphics::FontManager::Init();
+#if 0
 	font = new garm::graphics::Font("Resources/Fonts/SourceSansPro-Light.ttf");
 
 	garm::graphics::Vertex vertex[] = {
@@ -122,30 +129,118 @@ bool TestApp::Init(){
 	//layer->AddRenderable(renderable3);
 	//layer->AddRenderable(renderable4);
 
-	CheckGLError();
 	glEnable(GL_DEPTH_TEST);
 	glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+#elseif 0
+
+	garm::graphics::Vertex vertex[] = {
+		{
+			glm::vec3(-1.0f, -1.0f, -0.1f),
+			glm::vec4(0.9f, 0.0f, 0.0f, 1.0f),
+			glm::vec2(0.0f, 0.0f)
+		},{
+			glm::vec3(1.0f, -1.0f, -0.1f),
+			glm::vec4(0.0f, 0.9f, 0.0f, 1.0f),
+			glm::vec2(1.0f, 0.0f)
+		},{
+			glm::vec3(1.0f, 1.0f, -0.1f),
+			glm::vec4(0.0f, 0.0f, 0.9f, 1.0f),
+			glm::vec2(1.0f, 1.0f)
+		},{
+			glm::vec3(-1.0f, 1.0f, -0.1f),
+			glm::vec4(0.0f, 0.9f, 0.0f, 1.0f),
+			glm::vec2(0.0f, 1.0f)
+		}
+	};
+
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertex), vertex, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(0, 3, GL_FLOAT, false, sizeof(garm::graphics::Vertex), (GLvoid*)0);
+	glVertexAttribPointer(1, 4, GL_FLOAT, false, sizeof(garm::graphics::Vertex), (GLvoid*)sizeof(glm::vec3));
+	glVertexAttribPointer(2, 2, GL_FLOAT, false, sizeof(garm::graphics::Vertex), (GLvoid*)(sizeof(glm::vec3) + sizeof(glm::vec4)));
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	CheckGLError();
+
+#else
+	garm::graphics::Vertex verts[] = {
+		{
+			glm::vec3(0.0f, 0.0f, -0.1f),
+			glm::vec4(0.9f, 0.0f, 0.0f, 1.0f),
+			glm::vec2(0.0f, 1.0f)
+		},{
+			glm::vec3(500.0f, 500.0f, -0.1f),
+			glm::vec4(0.0f, 0.9f, 0.0f, 1.0f),
+			glm::vec2(1.0f, 0.0f)
+		},{
+			glm::vec3(0.0f, 500.0f, -0.1f),
+			glm::vec4(0.0f, 0.0f, 0.9f, 1.0f),
+			glm::vec2(0.0f, 0.0f)
+		}
+	};
+
+	glm::mat4 m_projectionMatrix = glm::ortho(0.0f, 800.0f, 0.0f, 600.f);
+	shader = new garm::graphics::Shader("Shaders/vShader.shader", "Shaders/fShader.shader");
+	shader->Use();
+	shader->SetUniform("p", m_projectionMatrix);
+	shader->SetUniform("m", glm::mat4(1));
+	garm::graphics::MeshData mesh({ verts[0], verts[1], verts[2] });
+	buffer =  mesh.MakeBuffer();
+	
+	
+	//glEnableVertexAttribArray(0);
+	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)0);
+	//glEnableVertexAttribArray(1);
+	//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)sizeof(glm::vec3));
+	//glEnableVertexAttribArray(2);
+	//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)(sizeof(glm::vec3) + sizeof(glm::vec4)));
+	fontRenderable = new garm::graphics::FontRenderable("!heiSaanN!", { glm::vec4(0.9f, 0.2f, 0.3f, 1.0f) });
+	//garm::graphics::FontMap* fm = FontManager_M->GetFontMap(garm::graphics::Fonts::FONT_SCP_R);
+	//fm->Bind(0);
+	glEnable(GL_BLEND);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#endif
 	return true;
 }
 
 void TestApp::Update(float dt){
+
 }
 
 void TestApp::Render() {
 	glClearColor(0.05f, 0.075f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+#if 0
 	if(garm::InputHandler::IsKeyDown(VK_SPACE))
 		renderable->rotate(glm::rotate(glm::quat(), 0.001f, glm::vec3(0.0f, 0.0f, 1.0f)));
 	if (garm::InputHandler::IsKeyDown(VK_RETURN))
 		renderable->setRotation(glm::quat());
-	glm::vec2 mousepos(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
-	std::cout << "X: " << mousepos.x << " Y: " << mousepos.y << std::endl;
+	//std::cout << "X: " << mousepos.x << " Y: " << mousepos.y << std::endl;
 	//mousepos = (mousepos * glm::vec2(16.0f, 12.0f) - glm::vec2(8.0f, 6.0f));
 	layer->GetShader()->SetUniform("mouse", mousepos);
 	layer->GetShader()->SetUniform("t", 0);
 	layer->OnRender();
-
+#elseif 0
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 	CheckGLError();
+#else
+	glm::vec2 mousepos(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
+	shader->SetUniform("mouse", mousepos);
+	fontRenderable->Render(shader);
+	//shader->SetUniform("t", 0);
+	//glDrawArrays(GL_TRIANGLES, 0, 3);
+#endif
 }

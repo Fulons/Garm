@@ -5,13 +5,13 @@ uniform sampler2D t;
 
 out vec4 color;
 
-in vec3 out_color;
+in vec4 out_color;
 in vec4 pos;
 in vec2 texCoord;
 
 
 void main() {
 	float intensity = max(100.0f / length(pos.xy - mouse), 1.0f);
-	//color = vec4(out_color, 1.0f) * intensity;
-	color = vec4(out_color, texture(t, texCoord).r) * intensity;
+	//color = out_color *intensity;
+	color = vec4(out_color.xyz, texture(t, texCoord).r) * intensity;
 }

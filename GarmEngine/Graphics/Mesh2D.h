@@ -1,15 +1,16 @@
 #pragma once
 #include <vector>
 #include "../Math.h"
+#include "MeshData.h"
 #include <gl/glew.h>
 
 namespace garm { namespace graphics {
 
-	struct Vertex {
-		glm::vec3 position;
-		glm::vec4 color;
-		glm::vec2 UV;
-	};
+	//struct Vertex {
+	//	glm::vec3 position;
+	//	glm::vec4 color;
+	//	glm::vec2 UV;
+	//};
 
 	class VertexArray;
 	class VertexBuffer;

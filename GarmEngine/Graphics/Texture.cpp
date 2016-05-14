@@ -46,9 +46,15 @@ namespace garm { namespace graphics {
 		return true;
 	}
 
+	void Texture::EditTexture(glm::ivec2 pos, GLubyte * image, glm::ivec2 size){
+		glBindTexture(GL_TEXTURE_2D, m_textureID);
+		glTexSubImage2D(GL_TEXTURE_2D, 0, pos.x, pos.y, size.x, size.y, m_type, GL_UNSIGNED_BYTE, image);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
 	void Texture::Bind(int slot){
 		glBindTexture(GL_TEXTURE_2D, m_textureID);
-		glActiveTexture(GL_TEXTURE0 + slot);
+		glActiveTexture(GL_TEXTURE0 + slot);		
 	}
 
 } }

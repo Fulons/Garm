@@ -10,10 +10,9 @@ namespace garm { namespace graphics {
 
 	
 
-	Texture * Font::GetCharTexture(char c)
-	{
+	Font::Character* Font::GetCharacter(char c){
 		auto pos = m_characters.find(c);
-		if (pos != m_characters.end()) return pos->second.texture;
+		if (pos != m_characters.end()) return &pos->second;
 		else {
 			std::cout << "Unloaded char trying to be rendered" << std::endl;
 			assert(false);
@@ -21,13 +20,14 @@ namespace garm { namespace graphics {
 		}
 	}
 
-	Font::Font(std::string path){
+	Font::Font(std::string path)
+	: m_path(path){
 		FT_Library ft;
 		if (FT_Init_FreeType(&ft))
 			std::cout << "Could not init Freetype!" << std::endl;
 		FT_Face face;
-		if (FT_New_Face(ft, path.c_str(), 0, &face))
-			std::cout << "Failed to load font: " << path << std::endl;
+		if (FT_New_Face(ft, m_path.c_str(), 0, &face))
+			std::cout << "Failed to load font: " << m_path << std::endl;
 
 		FT_Set_Pixel_Sizes(face, 0, 48);
 		
@@ -49,12 +49,17 @@ namespace garm { namespace graphics {
 	void Font::PutStringInGroup(std::string string, Group2D* group){
 		glm::vec3 position(0.0f, 0.0f, 0.0f);
 		for (char i = 0; i < string.length(); i++) {
-			Renderable2D* renderable = Renderable2D::MakeDefaultRenderable(GetCharTexture(string[i]), glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
+			Character* character = GetCharacter(string[i]);
+			Renderable2D* renderable = Renderable2D::MakeDefaultRenderable(character->texture, glm::vec4(0.5f, 0.5f, 0.5f, 1.0f));
 			renderable->setPosition(position);
-			renderable->setScale(m_characters[string[i]].size);
+			renderable->setScale(character->size);
 			group->AddRenderable(renderable);
-			position.x += (m_characters[string[i]].advance >> 6);
+			position.x += (character->advance >> 6);
 		}
 	}
 
+	StringRenderable::StringRenderable()
+	: m_vb(GL_DYNAMIC_DRAW){
+	//	m_vb.SetData()
+	}
 } }

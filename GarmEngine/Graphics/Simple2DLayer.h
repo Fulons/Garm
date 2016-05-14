@@ -13,6 +13,7 @@ namespace garm { namespace graphics{
 	class Simple2DLayer : Layer {
 	private:
 		Shader* m_shader;
+		Shader* m_fontShader;
 		Simple2DRenderer* m_renderer;
 		std::vector<Renderable2D*> m_renderables;
 		glm::mat4 m_projectionMatrix;

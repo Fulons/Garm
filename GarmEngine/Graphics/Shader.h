@@ -7,6 +7,12 @@
 
 namespace garm { namespace graphics {
 
+	enum VertexAttibIndex {
+		Position = 0,
+		Color = 1,
+		UV = 2,
+	};
+
 	class Shader
 	{
 	public:

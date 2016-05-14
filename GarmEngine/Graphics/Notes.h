@@ -10,7 +10,7 @@
 //must take a name++
 //implement a way to notify on change
 template <typename T>
-	class CommandVar{
+	class EventVar{
 		T var;
 	public:
 
@@ -19,8 +19,12 @@ template <typename T>
 			return var;
 		}
 
+		T& operator .() {
+			return var;
+		}
+
 		template <typename T>
-		CommandVar<T>& operator =(T value) {
+		EventVar<T>& operator =(T value) {
 			var = value;
 			return *this;
 		}
