@@ -34,6 +34,36 @@ namespace garm { namespace graphics {
 		AddTexCoordsData(texCoords);
 	}
 
+	void MeshData::AddSprite(const glm::vec3 pos, const glm::vec2 size, const std::vector<glm::vec2>& texCoords, bool genIndices){
+		assert(texCoords.size() == 4);
+		assert(m_colors.size() > 0);
+		if (genIndices) {
+			GLushort startIndex = (GLushort)m_vertices.size() - 1;
+			m_indices.insert(m_indices.end(), { startIndex, (GLushort)(startIndex + 1), (GLushort)(startIndex + 2),
+												startIndex, (GLushort)(startIndex + 2), (GLushort)(startIndex + 3)});
+		}
+		m_vertices.emplace_back(glm::vec3(pos), m_colors[0], texCoords[0]);
+		m_vertices.emplace_back(glm::vec3(pos.x + size.x, pos.y, pos.z), m_colors[0], texCoords[1]);
+		m_vertices.emplace_back(glm::vec3(pos.x + size.x, pos.y + size.y, pos.z), m_colors[0], texCoords[2]);
+		m_vertices.emplace_back(glm::vec3(pos.x, pos.y + size.y, pos.z), m_colors[0], texCoords[3]);
+		
+	}
+
+	void MeshData::AddSprite(const glm::vec3 pos, const glm::vec2 size, bool genIndices){
+		assert(m_colors.size() > 0);
+		if (genIndices) {
+			GLushort startIndex = (GLushort)m_vertices.size() - 1;
+			m_indices.insert(m_indices.end(), { startIndex, (GLushort)(startIndex + 1), (GLushort)(startIndex + 2),
+				startIndex, (GLushort)(startIndex + 2), (GLushort)(startIndex + 3)});
+		}
+		assert(m_texcoords.size() == 4);
+		assert(m_colors.size() > 0);
+		m_vertices.emplace_back(glm::vec3(pos), m_colors[0], glm::vec2(0.0f, 0.0f));
+		m_vertices.emplace_back(glm::vec3(pos.x + size.x, pos.y, pos.z), m_colors[0], glm::vec2(1.0f, 0.0f));
+		m_vertices.emplace_back(glm::vec3(pos.x + size.x, pos.y + size.y, pos.z), m_colors[0], glm::vec2(1.0f, 1.0f));
+		m_vertices.emplace_back(glm::vec3(pos.x, pos.y + size.y, pos.z), m_colors[0], glm::vec2(0.0f, 1.0f));
+	}
+
 	void MeshData::AddVertexData(const std::vector<Vertex>& vertices){
 		m_vertices.insert(m_vertices.end(), vertices.begin(), vertices.end());
 	}

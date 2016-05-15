@@ -39,6 +39,8 @@ namespace garm { namespace graphics {
 		void AddData(const std::vector<glm::vec3>& positions,
 			const std::vector<glm::vec4>& colors,
 			const std::vector<glm::vec2>& texCoords);
+		void AddSprite(const glm::vec3 pos, const glm::vec2 size, const std::vector<glm::vec2>& texCoords, bool genIndices = true);
+		void AddSprite(const glm::vec3 pos, const glm::vec2 size, bool genIndices = true);
 		void AddVertexData(const std::vector<Vertex>& vertices);
 		bool MakeDataVertexData();
 		void* GetInterLeavedData();

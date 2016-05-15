@@ -132,6 +132,10 @@
     <ClCompile Include="Graphics\FontMap.cpp" />
     <ClCompile Include="Graphics\FontRenderable.cpp" />
     <ClCompile Include="Graphics\Group2D.cpp" />
+    <ClCompile Include="Graphics\GUI\Button.cpp" />
+    <ClCompile Include="Graphics\GUI\GUILayer.cpp" />
+    <ClCompile Include="Graphics\GUI\Widget.cpp" />
+    <ClCompile Include="Graphics\GUI\Window.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
     <ClCompile Include="Graphics\Layer.cpp" />
     <ClCompile Include="Graphics\Mesh2D.cpp" />
@@ -155,6 +159,10 @@
     <ClInclude Include="Graphics\FontMap.h" />
     <ClInclude Include="Graphics\FontRenderable.h" />
     <ClInclude Include="Graphics\Group2D.h" />
+    <ClInclude Include="Graphics\GUI\Button.h" />
+    <ClInclude Include="Graphics\GUI\GUILayer.h" />
+    <ClInclude Include="Graphics\GUI\Widget.h" />
+    <ClInclude Include="Graphics\GUI\Window.h" />
     <ClInclude Include="Graphics\Material.h" />
     <ClInclude Include="Graphics\Layer.h" />
     <ClInclude Include="Graphics\MeshData.h" />
