@@ -15,12 +15,13 @@ namespace garm{ namespace graphics{
 		Buffer* m_buffer = nullptr;
 		Buffer* m_indexBuffer = nullptr;
 		Texture* m_texture;
+		short m_fontSize;
 		void MakeBuffer();
-	public:
+	protected:
 		FontRenderable();
-		FontRenderable(const std::string& str);
-		FontRenderable(const std::string& str, const std::vector<glm::vec4> charColors);
-		~FontRenderable();
+	public:
+		FontRenderable(const std::string& str, short fontSize, const std::vector<glm::vec4>& charColors);
+		virtual ~FontRenderable();
 
 		virtual void Render(Shader* shader) override;
 	};

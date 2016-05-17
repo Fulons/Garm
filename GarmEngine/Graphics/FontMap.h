@@ -56,7 +56,8 @@ namespace garm { namespace graphics {
 		unsigned short m_CurrentLineHeight{ 0 };
 		glm::ivec2 m_NextPos{ 0.0f, 0.0f };
 		void LoadCharacters(wchar_t begin, wchar_t end);
-		FontMap(std::string path);
+		FontMap(std::string path, short fontSize);
+		short m_fontSize;
 		friend class FontManager;
 	public:
 		const Character GetCharacter(wchar_t c);
@@ -66,12 +67,12 @@ namespace garm { namespace graphics {
 		FontManager() {}
 		FontManager(const FontManager& r) {}
 		static FontManager* m_instance;
-		std::map<Fonts, FontMap*> m_fontMaps;
+		std::map<Fonts, std::map<short, FontMap*>> m_fontMaps;
 	public:
 		static void Init();
 		static FontManager* GetInstance();
-		FontMap* GetFontMap(Fonts fontType);
-		Character GetCharacter(Fonts fontType, wchar_t c);
+		FontMap* GetFontMap(Fonts fontType, short fontSize);
+		Character GetCharacter(Fonts fontType, short fontSize, wchar_t c);
 	};
 
 #define FontManager_M garm::graphics::FontManager::GetInstance()

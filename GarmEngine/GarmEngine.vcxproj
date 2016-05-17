@@ -189,8 +189,10 @@
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\fShader.shader" />
-    <None Include="Shaders\vShader.shader" />
+    <None Include="Shaders\f.shader" />
+    <None Include="Shaders\fFont.shader" />
+    <None Include="Shaders\v.shader" />
+    <None Include="Shaders\vFont.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,6 +2,10 @@
 #include "Widget.h"
 #include <functional>
 
+#define BUTTON_PADDING 2
+#define BUTTON_XPADDING 2
+#define BUTTON_YPADDING 6
+
 namespace garm{ namespace gui{
 
 	class Window;

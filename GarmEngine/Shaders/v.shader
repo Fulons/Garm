@@ -1,6 +1,5 @@
 #version 330 core
 
-
 in layout(location = 0) vec3 position;
 in layout(location = 1) vec4 color;
 in layout(location = 2) vec2 UV;

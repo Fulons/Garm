@@ -22,6 +22,7 @@ namespace garm { namespace graphics{
 		GUI_TEXTURE_FRAGMENT_TYPE_BUTTON_TOGGLEHONLY,
 	};
 
+	//TODO: currently fragments contains artifacts of neighbouring fragments, need to have a border inbetween
 	class BitmapFragmentMap : public Texture {
 	public:
 		class Fragment {
@@ -72,9 +73,10 @@ namespace garm { namespace graphics{
 		void SetupIndices();
 	public:
 		GUIRenderer();
-		virtual void Render(Shader* shader) override;
+		virtual void Render(Shader* shader) override{}
 		virtual void Begin();
 		virtual void AddSprite(const GUISprite& sprite);
+		virtual void AddText(const std::string& text, const std::vector<glm::vec4>& colors);
 		virtual void End();
 		virtual void PushPosition(glm::ivec2 pos);
 		virtual void PopPosition();

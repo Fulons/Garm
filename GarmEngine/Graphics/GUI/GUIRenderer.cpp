@@ -51,7 +51,7 @@ namespace garm{ namespace graphics{
 	}
 
 	//TODO: off by one error... 0 - 1024 in size...not sure if it resolves itself...think it actually does
-	//if I ask for a size BITMAP_FRAMENT_MAP_SIZE texture to be inserted....
+	//if I ask for a size BITMAP_FRGAMENT_MAP_SIZE texture to be inserted....
 	BitmapFragmentMap::BitmapFragmentMap()
 	: m_fragmentTree(glm::ivec2(BITMAP_FRAGMENT_MAP_SIZE, BITMAP_FRAGMENT_MAP_SIZE)){
 		m_size = m_fragmentTree.GetSize();
@@ -86,7 +86,7 @@ namespace garm{ namespace graphics{
 		glm::ivec2 size;
 		int channels;
 		GLubyte* data = SOIL_load_image(path.c_str(), &size.x, &size.y, &channels, SOIL_LOAD_AUTO);
-		Insert(data, size, type);	//TODO: cannot use LoadDataFromFile funtion as it will set the size of the texture, just using atm for testing purposes
+		Insert(data, size, type);
 	}
 
 	BitmapFragmentMap::Fragment* BitmapFragmentMap::Get(TextureFragmentType type){
@@ -112,23 +112,23 @@ namespace garm{ namespace graphics{
 			break;
 		case GUI_TEXTURE_FRAGMENT_TYPE_FADE:
 			//TODO: this might not work as expected as the size.x is 1
-			uv.insert(uv.end(), { uvPos, uvPos + uvSize, uvPos + uvSize, uvPos });
+			uv.insert(uv.end(), { uvPos + uvSize, uvPos, uvPos, uvPos + uvSize });
 			break;
 		case GUI_TEXTURE_FRAGMENT_TYPE_FADE_INVERSE:
 			//TODO: this might not work as expected as the size.x is 1
-			uv.insert(uv.end(), { uvPos + uvSize, uvPos, uvPos, uvPos + uvSize });
+			uv.insert(uv.end(), { uvPos, uvPos + uvSize, uvPos + uvSize, uvPos });
 			break;
 		case GUI_TEXTURE_FRAGMENT_TYPE_FADE_UP:
 			//TODO: this might not work as expected as the size.x is 1
-			uv.insert(uv.end(), { uvPos, uvPos, uvPos + uvSize, uvPos + uvSize });
+			uv.insert(uv.end(), { uvPos + uvSize, uvPos + uvSize, uvPos, uvPos });
 			break;
 		case GUI_TEXTURE_FRAGMENT_TYPE_FADE_UP_INVERSE:
 			//TODO: this might not work as expected as the size.x is 1
-			uv.insert(uv.end(), { uvPos + uvSize, uvPos + uvSize, uvPos, uvPos });
+			uv.insert(uv.end(), { uvPos, uvPos, uvPos + uvSize, uvPos + uvSize });
 			break;
 
 		default:
-			uv.insert(uv.end(), { uvPos, glm::vec2(uvPos.x + uvSize.x, uvPos.y), uvPos + uvSize, glm::vec2(uvPos.x, uvPos.y + uvSize.y) });
+			uv.insert(uv.end(), { uvPos + uvSize, glm::vec2(uvPos.x, uvPos.y + uvSize.y), uvPos, glm::vec2(uvPos.x + uvSize.x, uvPos.y) });
 			break;
 		}
 	}
@@ -151,10 +151,6 @@ namespace garm{ namespace graphics{
 		m_indexBuffer = new Buffer(GUI_RENDERER_INITIAL_IBUFFER_SIZE, GL_DYNAMIC_DRAW, nullptr, GL_ELEMENT_ARRAY_BUFFER);
 		m_bufferSpriteCount = GUI_RENDERER_BUFFER_SPRITE_COUNT;
 		SetupIndices();
-	}
-
-	void GUIRenderer::Render(Shader * shader){
-
 	}
 
 	void GUIRenderer::SetupIndices() {
@@ -215,6 +211,10 @@ namespace garm{ namespace graphics{
 		m_mappedBuffer++;
 
 		m_currentSpriteCount++;
+	}
+
+	void GUIRenderer::AddText(const std::string & text, const std::vector<glm::vec4>& colors){
+
 	}
 
 	void GUIRenderer::Flush(){

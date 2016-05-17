@@ -8,20 +8,20 @@ namespace garm { namespace gui {
 	: Widget(parent, pos, size){
 
 		AddChild(new Button(this,
-			glm::ivec2(size.x - size.y - 1, 1),
-			glm::ivec2(size.y - 2, size.y - 2),
+			glm::ivec2(size.x - GUI_WINDOW_HEADER_HEIGHT + BUTTON_PADDING, BUTTON_PADDING),
+			glm::ivec2(GUI_WINDOW_HEADER_HEIGHT - BUTTON_PADDING * 2, GUI_WINDOW_HEADER_HEIGHT - BUTTON_PADDING * 2),
 			[parent]() { parent->Close(); },
 			graphics::GUI_TEXTURE_FRAGMENT_TYPE_BUTTON_CLOSE));
 
 		AddChild(new Button(this,
-			glm::ivec2(size.x - 2 * (size.y - 1), 1),
-			glm::ivec2(size.y - 2, size.y - 2),
+			glm::ivec2(size.x - (GUI_WINDOW_HEADER_HEIGHT - BUTTON_PADDING) * 2, BUTTON_PADDING),
+			glm::ivec2(GUI_WINDOW_HEADER_HEIGHT - BUTTON_PADDING * 2, GUI_WINDOW_HEADER_HEIGHT - BUTTON_PADDING * 2),
 			[parent]() { parent->ToggleHeaderOnly(); },
 			graphics::GUI_TEXTURE_FRAGMENT_TYPE_BUTTON_TOGGLEHONLY));
 
 		m_backgroundSprite.size = m_size;
 		m_backgroundSprite.color = glm::vec4(1.0f, 0.58f, 0.93f, 1.0f);
-		m_backgroundSprite.type = graphics::GUI_TEXTURE_FRAGMENT_TYPE_FADE_UP;
+		m_backgroundSprite.type = graphics::GUI_TEXTURE_FRAGMENT_TYPE_FADE_UP_INVERSE;
 	}
 
 	void Header::Render(graphics::GUIRenderer * renderer){

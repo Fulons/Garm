@@ -14,7 +14,7 @@ namespace garm{ namespace graphics{
 		if (FT_New_Face(ft, m_fontPath.c_str(), 0, &face))
 			std::cout << "Failed to load font: " << m_fontPath << std::endl;
 
-		FT_Set_Pixel_Sizes(face, 0, 48);
+		FT_Set_Pixel_Sizes(face, 0, m_fontSize);
 
 		if(FT_Load_Char(face, c, FT_LOAD_RENDER))
 			std::cout << "Failed to load glyph: " << (char)c << " " << m_fontPath << std::endl;
@@ -70,8 +70,8 @@ namespace garm{ namespace graphics{
 		
 	}
 
-	FontMap::FontMap(std::string path)
-	: m_fontPath(path){
+	FontMap::FontMap(std::string path, short fontSize)
+	: m_fontPath(path), m_fontSize(fontSize){
 		m_size = glm::ivec2(FONTMAP_SIZE, FONTMAP_SIZE);
 		m_internalFormat = m_type = GL_RED;
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -111,15 +111,19 @@ namespace garm{ namespace graphics{
 
 	}
 
-	FontMap* FontManager::GetFontMap(Fonts fontType){
-		auto it = m_fontMaps.find(fontType);
-		if (it != m_fontMaps.end()) return it->second;
-		FontMap* ret = new FontMap(G_FontPaths[fontType]);
-		m_fontMaps[fontType] = ret;
+	FontMap* FontManager::GetFontMap(Fonts fontType, short fontSize){
+		auto type = m_fontMaps.find(fontType);
+		if (type != m_fontMaps.end()) {
+			auto size = type->second.find(fontSize);
+			if(size != type->second.end())
+				return size->second;
+		}
+		FontMap* ret = new FontMap(G_FontPaths[fontType], fontSize);
+		m_fontMaps[fontType][fontSize] = ret;
 		return ret;
 	}
 
-	Character FontManager::GetCharacter(Fonts fontType, wchar_t c){
-		return GetFontMap(fontType)->GetCharacter(c);
+	Character FontManager::GetCharacter(Fonts fontType, short fontSize, wchar_t c){
+		return GetFontMap(fontType, fontSize)->GetCharacter(c);
 	}
 } }

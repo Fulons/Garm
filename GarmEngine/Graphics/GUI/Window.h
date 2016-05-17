@@ -1,7 +1,7 @@
 #pragma once
 #include "Widget.h"
 
-#define GUI_WINDOW_HEADER_HEIGHT 10
+#define GUI_WINDOW_HEADER_HEIGHT 20
 
 #define IS_FLAG_SET(flag, flags) ((flag & flags) == flag)
 

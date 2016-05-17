@@ -7,13 +7,8 @@ namespace garm{ namespace graphics{
 		m_buffer = new Buffer;
 	}
 	
-	FontRenderable::FontRenderable(const std::string & str)
-		: m_string(str){
-		m_buffer = new Buffer;
-	}
-	
-	FontRenderable::FontRenderable(const std::string & str, const std::vector<glm::vec4> charColors)
-		: m_string(str), m_charColors(charColors){
+	FontRenderable::FontRenderable(const std::string & str, short fontSize, const std::vector<glm::vec4>& charColors)
+		: m_string(str), m_charColors(charColors), m_fontSize(fontSize){
 		MakeBuffer();
 	}
 	
@@ -25,7 +20,7 @@ namespace garm{ namespace graphics{
 		MeshData mesh;
 		std::vector<Vertex>& verts = mesh.GetVertexRef();
 		verts.reserve(m_string.length() * 4);
-		FontMap* fontMap = FontManager_M->GetFontMap(FONT_SCP_R);
+		FontMap* fontMap = FontManager_M->GetFontMap(FONT_SCP_R, m_fontSize);
 		unsigned advance = 0;
 		std::vector<GLushort>& indices = mesh.GetIndexRef();
 		indices.reserve(m_string.length() * 6);
