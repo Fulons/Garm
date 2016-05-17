@@ -131,7 +131,7 @@ namespace garm{ namespace graphics{
 			(unsigned short)mapIndex
 		};
 		BufferSubData(face->glyph->bitmap.buffer, glm::ivec3(m_nextPos_lineHeight[mapIndex].first, mapIndex), glm::ivec3(ret.size, 1));
-		m_nextPos_lineHeight[mapIndex].second = m_nextPos_lineHeight[mapIndex].second > m_nextPos_lineHeight[mapIndex].first.y ? m_nextPos_lineHeight[mapIndex].second : m_nextPos_lineHeight[mapIndex].first.y;
+		m_nextPos_lineHeight[mapIndex].second = m_nextPos_lineHeight[mapIndex].second > ret.size.y ?m_nextPos_lineHeight[mapIndex].second : ret.size.y;
 		m_nextPos_lineHeight[mapIndex].first.x += ret.size.x;
 		m_characters[mapIndex][c] = ret;
 		return ret;
