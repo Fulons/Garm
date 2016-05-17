@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Math.h"
+#include "GUIRenderer.h"
 #include <string>
 #include <vector>
 
@@ -10,6 +11,8 @@
 
 namespace garm { namespace gui {
 
+	//class GUIRenderer;
+
 	class Widget {
 	protected:
 		const Widget* m_parent = nullptr;
@@ -19,6 +22,7 @@ namespace garm { namespace gui {
 		glm::ivec2 m_pos, m_size;
 	public:
 		Widget(const Widget* parent);
+		Widget(const Widget* parent, glm::ivec2 pos, glm::ivec2 size);
 		virtual ~Widget();
 		void AddChild(Widget* child);
 		void RemoveChild(Widget* child);
@@ -31,7 +35,7 @@ namespace garm { namespace gui {
 		bool MouseFocus() { return m_mouseFocus; }
 
 		virtual bool Contains(glm::ivec2 point);
-		virtual void Render();
+		virtual void Render(graphics::GUIRenderer* renderer);
 	};
 
 	

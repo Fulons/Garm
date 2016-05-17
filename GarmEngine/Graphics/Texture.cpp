@@ -1,6 +1,6 @@
 #include "Texture.h"
-#include <soil/SOIL.h>
 #include "../Utility.h"
+#include <soil/SOIL.h>
 
 namespace garm { namespace graphics {
 
@@ -44,6 +44,11 @@ namespace garm { namespace graphics {
 		glBindTexture(GL_TEXTURE_2D, 0);
 		CheckGLError();
 		return true;
+	}
+
+	GLubyte * Texture::LoadDataFromFile(const std::string & path)
+	{
+		return SOIL_load_image(path.c_str(), &m_size.x, &m_size.y, &m_channels, SOIL_LOAD_AUTO);
 	}
 
 	void Texture::EditTexture(glm::ivec2 pos, GLubyte * image, glm::ivec2 size){

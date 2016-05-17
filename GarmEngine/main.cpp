@@ -15,6 +15,8 @@
 #include "Math.h"
 #include "Graphics/FontRenderable.h"
 #include "Graphics/FontMap.h"
+#include "Graphics/GUI/Window.h"
+#include "Graphics/GUI/GUIRenderer.h"
 
 #include <iostream>
 
@@ -65,6 +67,8 @@ TestApp::TestApp(HINSTANCE hInstance)
 //garm::graphics::Font* font;
 garm::graphics::FontRenderable* fontRenderable;
 garm::graphics::Buffer* buffer;
+garm::gui::Window* window;
+garm::graphics::GUIRenderer* guiRenderer;
 
 GLuint VAO, VBO, IBO;
 
@@ -208,6 +212,8 @@ bool TestApp::Init(){
 	//fm->Bind(0);
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	guiRenderer = new garm::graphics::GUIRenderer();
+	window = new garm::gui::Window("Window", glm::ivec2(10, 10), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
 #endif
 	return true;
 }
@@ -237,9 +243,14 @@ void TestApp::Render() {
 	glBindVertexArray(0);
 	CheckGLError();
 #else
+	//shader->SetUniform("t", 0);
 	glm::vec2 mousepos(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
 	shader->SetUniform("mouse", mousepos);
 	fontRenderable->Render(shader);
+	guiRenderer->Begin();
+	shader->SetUniform("m", glm::mat4(1));
+	window->Render(guiRenderer);
+	guiRenderer->End();
 	//shader->SetUniform("t", 0);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 #endif

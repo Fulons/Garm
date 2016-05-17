@@ -19,6 +19,8 @@ namespace garm{ namespace graphics{
 		virtual void EditData(GLintptr offset, GLsizeiptr size, const GLvoid* data);
 		static void MakeBuffers(GLsizei numBuffers, std::vector<Buffer>& buffers);
 		virtual void Bind(GLenum target = -1);
+		virtual void* MapBufferWrite();
+		virtual void UnmapBuffer();
 	};
 
 } }

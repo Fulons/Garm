@@ -134,6 +134,8 @@
     <ClCompile Include="Graphics\Group2D.cpp" />
     <ClCompile Include="Graphics\GUI\Button.cpp" />
     <ClCompile Include="Graphics\GUI\GUILayer.cpp" />
+    <ClCompile Include="Graphics\GUI\GUIRenderer.cpp" />
+    <ClCompile Include="Graphics\GUI\header.cpp" />
     <ClCompile Include="Graphics\GUI\Widget.cpp" />
     <ClCompile Include="Graphics\GUI\Window.cpp" />
     <ClCompile Include="Graphics\IndexBuffer.cpp" />
@@ -146,6 +148,7 @@
     <ClCompile Include="Graphics\Simple2DLayer.cpp" />
     <ClCompile Include="Graphics\TextRendering.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Graphics\TextureGenerator.cpp" />
     <ClCompile Include="Graphics\VertexArray.cpp" />
     <ClCompile Include="Graphics\VertexBuffer.cpp" />
     <ClCompile Include="main.cpp" />
@@ -161,6 +164,8 @@
     <ClInclude Include="Graphics\Group2D.h" />
     <ClInclude Include="Graphics\GUI\Button.h" />
     <ClInclude Include="Graphics\GUI\GUILayer.h" />
+    <ClInclude Include="Graphics\GUI\GUIRenderer.h" />
+    <ClInclude Include="Graphics\GUI\header.h" />
     <ClInclude Include="Graphics\GUI\Widget.h" />
     <ClInclude Include="Graphics\GUI\Window.h" />
     <ClInclude Include="Graphics\Material.h" />
@@ -170,6 +175,7 @@
     <ClInclude Include="Graphics\Simple2DLayer.h" />
     <ClInclude Include="Graphics\TextRendering.h" />
     <ClInclude Include="Graphics\Texture.h" />
+    <ClInclude Include="Graphics\TextureGenerator.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Graphics\Mesh2D.h" />
     <ClInclude Include="Graphics\IndexBuffer.h" />

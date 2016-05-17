@@ -90,6 +90,15 @@
     <ClCompile Include="Graphics\GUI\GUILayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\TextureGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\GUI\GUIRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\GUI\header.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="platform.h">
@@ -174,6 +183,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\GUI\GUILayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\TextureGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\GUI\GUIRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\GUI\header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

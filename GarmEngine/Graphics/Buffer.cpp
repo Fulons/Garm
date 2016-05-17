@@ -47,5 +47,16 @@ namespace garm{ namespace graphics{
 		else glBindBuffer(target, m_bufferID);
 	}
 
+	void* Buffer::MapBufferWrite()
+	{
+		Bind();
+		return glMapBuffer(m_target, GL_WRITE_ONLY);
+	}
+
+	void Buffer::UnmapBuffer(){
+		Bind();
+		glUnmapBuffer(m_target);
+	}
+
 
 } }

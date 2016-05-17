@@ -7,11 +7,11 @@ namespace garm { namespace gui {
 
 	class Button : public Widget {
 	protected:
-		void Init();
 		std::function<void()> m_callback;
+		graphics::GUISprite m_sprite;
 	public:
-		Button(const Widget* parent) : Widget(parent){}
-		void SetCallback(const std::function<void()> &callBack) { m_callback = callBack; }
+		Button(const Widget* parent, glm::ivec2 pos, glm::ivec2 size, const std::function<void()> &callBack,  graphics::TextureFragmentType type);
+		void Render(graphics::GUIRenderer* renderer) override;
 	};
 
 } }

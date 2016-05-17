@@ -1,10 +1,18 @@
 #include "Widget.h"
 
+using garm::graphics::GUIRenderer;
+
 namespace garm { namespace gui {
 
 	Widget::Widget(const Widget * parent)
 	: m_parent(parent), m_visible(GUI_WIDGET_STD_VISIBILITY), m_enabled(GUI_WIDGET_STD_ENABLE),
 	m_focused(GUI_WIDGET_STD_FOCUSE), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUSE){}
+	
+	Widget::Widget(const Widget * parent, glm::ivec2 pos, glm::ivec2 size)
+	: m_parent(parent), m_pos(pos), m_size(size),
+	m_visible(GUI_WIDGET_STD_VISIBILITY), m_enabled(GUI_WIDGET_STD_ENABLE),
+	m_focused(GUI_WIDGET_STD_FOCUSE), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUSE){}
+
 	Widget::~Widget(){
 
 	}
@@ -31,10 +39,10 @@ namespace garm { namespace gui {
 		return true;
 	}
 
-	void Widget::Render(){
+	void Widget::Render(GUIRenderer* renderer){
 		for (auto child : m_children) {
 			if (child->Visible())
-				child->Render();
+				child->Render(renderer);
 		}
 	}
 } }
