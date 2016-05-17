@@ -14,7 +14,7 @@ namespace garm{ namespace graphics{
 		std::vector<glm::vec4> m_charColors;
 		Buffer* m_buffer = nullptr;
 		Buffer* m_indexBuffer = nullptr;
-		Texture* m_texture;
+		const Texture* m_texture;
 		short m_fontSize;
 		void MakeBuffer();
 	protected:

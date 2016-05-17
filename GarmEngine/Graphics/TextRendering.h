@@ -7,11 +7,11 @@
 
 namespace garm { namespace graphics {
 
-	class Texture;
+	class TextureOld;
 	class Group2D;
 	class Font {
 		struct Character {
-			Texture* texture;
+			TextureOld* texture;
 			glm::ivec2 size;
 			glm::ivec2 bearing;
 			GLuint advance;

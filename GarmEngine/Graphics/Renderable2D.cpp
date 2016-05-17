@@ -5,7 +5,7 @@
 namespace garm { namespace graphics {
 
 
-	Renderable2D::Renderable2D(Mesh2D * mesh, Texture* texture)
+	Renderable2D::Renderable2D(Mesh2D * mesh, TextureOld* texture)
 	: m_mesh(mesh), m_texture(texture){
 
 	}
@@ -39,7 +39,7 @@ namespace garm { namespace graphics {
 		return m_modelMatrix;
 	}
 
-	Renderable2D* Renderable2D::MakeDefaultRenderable(Texture* texture, glm::vec4 color){
+	Renderable2D* Renderable2D::MakeDefaultRenderable(TextureOld* texture, glm::vec4 color){
 		Vertex vertex[] = {
 			{
 				glm::vec3(0.0f, 0.0f, 0.0f),

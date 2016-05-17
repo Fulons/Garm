@@ -2,6 +2,8 @@
 #include "Context/Context.h"
 #include "Graphics/Shader.h"
 #include "Context/InputHandler.h"
+
+//Soon to be removed?
 //#include "Graphics/VertexArray.h"
 //#include "Graphics/Mesh2D.h"
 //#include "Graphics/Renderable2D.h"
@@ -11,6 +13,7 @@
 //#include "Graphics/Texture.h"
 //#include "Graphics/Simple2DLayer.h"
 //#include "Graphics/TextRendering.h"
+
 #include "Graphics/MeshData.h"
 #include "Math.h"
 #include "Graphics/FontRenderable.h"
@@ -53,19 +56,6 @@ TestApp::TestApp(HINSTANCE hInstance)
 
 }
 
-
-//garm::graphics::VertexBuffer* vb;
-//garm::graphics::IndexBuffer* ib;
-//garm::graphics::VertexArray* va;
-//garm::graphics::Mesh2D* mesh;
-//garm::graphics::Group2D* renderable;
-//garm::graphics::Renderable2D* renderable2;
-//garm::graphics::Renderable2D* renderable3;
-//garm::graphics::Renderable2D* renderable4;
-//garm::graphics::Simple2DRenderer* renderer;
-//garm::graphics::Simple2DLayer* layer;
-//garm::graphics::Texture* texture;
-//garm::graphics::Font* font;
 garm::graphics::FontRenderable* fontRenderable;
 garm::graphics::Buffer* buffer;
 garm::gui::Window* window;
@@ -76,7 +66,7 @@ GLuint VAO, VBO, IBO;
 bool TestApp::Init(){
 	if (!Context::Init()) return false;
 	garm::graphics::FontManager::Init();
-
+	CheckGLError();
 	garm::graphics::Vertex verts[] = {
 		{
 			glm::vec3(0.0f, 0.0f, -0.1f),
@@ -97,12 +87,12 @@ bool TestApp::Init(){
 	shader = new garm::graphics::Shader("Shaders/vFont.shader", "Shaders/fFont.shader");
 	shader->Use();
 	shader->SetUniform("p", m_projectionMatrix);
-	shader->SetUniform("m", glm::translate(glm::mat4(1), glm::vec3(50.0f, 500.0f, 0.0f)));
+	shader->SetUniform("m", glm::translate(glm::mat4(1), glm::vec3(50.0f, 100.0f, 0.0f)));
 	garm::graphics::MeshData mesh({ verts[0], verts[1], verts[2] });
 	buffer =  mesh.MakeBuffer();
-	
+
 	fontRenderable = new garm::graphics::FontRenderable("!hei SaanN!", 48, { glm::vec4(0.9f, 0.2f, 0.3f, 1.0f) });
-	
+	CheckGLError();
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -117,6 +107,7 @@ void TestApp::Update(float dt){
 }
 
 void TestApp::Render() {
+	CheckGLError();
 	glClearColor(0.05f, 0.075f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -129,6 +120,7 @@ void TestApp::Render() {
 	guiLayer->m_shader->SetUniform("mouse", mousepos);
 	guiLayer->OnRender();
 
+	CheckGLError();
 	//shader->SetUniform("t", 0);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
 

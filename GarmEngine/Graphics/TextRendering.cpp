@@ -36,7 +36,7 @@ namespace garm { namespace graphics {
 				std::cout << "Failed to laod glyph" << std::endl;
 				continue;
 			}
-			Texture* texture = new Texture(face->glyph->bitmap.buffer, glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows), 1);
+			TextureOld* texture = new TextureOld(face->glyph->bitmap.buffer, glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows), 1);
 			m_characters.insert(std::pair<char, Character>(
 				c, {
 					texture,
