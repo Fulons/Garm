@@ -14,5 +14,6 @@ void main() {
 	float intensity = max(100.0f / length(pos.xy - mouse), 1.0f);
 	//color = out_color *intensity;
 	//color = vec4(out_color.xyz, texture(t, texCoord).r) * intensity;
-	color = out_color * texture(t, texCoord).rrrg * intensity;
+	vec4 tex_color = texture(t, texCoord).rrrg;
+	color = out_color * vec4(tex_color.rrr * intensity, tex_color.a);
 }

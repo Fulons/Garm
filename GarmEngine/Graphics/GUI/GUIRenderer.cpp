@@ -55,7 +55,7 @@ namespace garm{ namespace graphics{
 	BitmapFragmentMap::BitmapFragmentMap()
 	: m_fragmentTree(glm::ivec2(BITMAP_FRAGMENT_MAP_SIZE, BITMAP_FRAGMENT_MAP_SIZE)){
 		m_size = m_fragmentTree.GetSize();
-		m_type = m_internalFormat = GL_LUMINANCE_ALPHA;
+		m_type = m_internalFormat = GL_RG;
 		glGenTextures(1, &m_textureID);
 		glBindTexture(GL_TEXTURE_2D, m_textureID);
 		glTexImage2D(GL_TEXTURE_2D, 0, m_internalFormat, m_size.x, m_size.y, 0, m_type, GL_UNSIGNED_BYTE, nullptr);
@@ -128,7 +128,7 @@ namespace garm{ namespace graphics{
 			break;
 
 		default:
-			uv.insert(uv.end(), { uvPos, glm::ivec2(uvPos.x + uvSize.x, uvPos.y), uvPos + uvSize, glm::ivec2(uvPos.x, uvPos.y + uvSize.y) });
+			uv.insert(uv.end(), { uvPos, glm::vec2(uvPos.x + uvSize.x, uvPos.y), uvPos + uvSize, glm::vec2(uvPos.x, uvPos.y + uvSize.y) });
 			break;
 		}
 	}

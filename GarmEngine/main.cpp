@@ -213,7 +213,7 @@ bool TestApp::Init(){
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	guiRenderer = new garm::graphics::GUIRenderer();
-	window = new garm::gui::Window("Window", glm::ivec2(10, 10), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
+	window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
 #endif
 	return true;
 }
