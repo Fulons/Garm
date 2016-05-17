@@ -298,7 +298,7 @@ namespace garm {
 			return false;
 		}
 		//Turning off v-sync
-		wglSwapIntervalEXT(0);
+		//wglSwapIntervalEXT(0);
 
 		return true;
 	}
