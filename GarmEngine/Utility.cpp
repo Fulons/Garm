@@ -6,7 +6,8 @@
 
 bool OutErrorMsg(const char * message)
 {
-	MessageBox(NULL, message, NULL, NULL);
+	//MessageBox(NULL, message, NULL, NULL);
+	std::cout << message << std::endl;
 	return false;
 }
 

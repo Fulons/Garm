@@ -1,7 +1,7 @@
 #version 330 core
 
 uniform vec2 mouse;
-uniform sampler3D t;
+uniform sampler2DArray t;
 
 out vec4 color;
 
@@ -13,5 +13,5 @@ flat in int textureID;
 void main() {
 	float intensity = max(20.0f / length(pos.xy - mouse), 1.0f);
 
-	color = vec4(out_color.xyz, 1.0f);// texture(t, vec3(texCoord.xy, textureID)).r) * intensity;
+	color = vec4(out_color.xyz, texture(t, vec3(texCoord.xy, float(textureID))).r) * intensity;
 }

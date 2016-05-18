@@ -74,7 +74,7 @@ namespace garm { namespace graphics {
 
 	void Texture::Bind(int slot) const{
 		glActiveTexture(GL_TEXTURE0 + slot);
-		glBindTexture(GL_TEXTURE_2D, m_textureID);
+		glBindTexture(m_target, m_textureID);
 	}
 
 	void Texture::Unbind() const{
@@ -126,7 +126,9 @@ namespace garm { namespace graphics {
 	void Texture3D::Init(){
 		GenTexture();
 		Bind();
-		glTexStorage3D(m_target, 0, m_format, m_size.x, m_size.y, m_depth);
+		glTexImage3D(m_target, 0, m_format, m_size.x, m_size.y, m_depth, 0, m_format, GL_UNSIGNED_BYTE, nullptr);
+		//glTexStorage3D(m_target, 1, m_format, m_size.x, m_size.y, m_depth);
+		CheckGLError();
 	}
 
 	Texture3D::Texture3D(glm::ivec3 size, GLint format, GLint channels)
@@ -138,6 +140,7 @@ namespace garm { namespace graphics {
 		if (size == glm::ivec3(0, 0, 0)) return;
 		Bind();
 		glTexSubImage3D(m_target, 0, pos.x, pos.y, pos.z, size.x, size.y, size.z, m_format, GL_UNSIGNED_BYTE, image);
+		CheckGLError();
 	}
 
 	void Texture3D::BufferData(const std::vector<GLubyte*>& images){

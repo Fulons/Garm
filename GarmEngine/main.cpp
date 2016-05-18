@@ -57,6 +57,7 @@ TestApp::TestApp(HINSTANCE hInstance)
 }
 
 garm::graphics::FontRenderable* fontRenderable;
+garm::graphics::Buffer* ibuffer;
 garm::graphics::Buffer* buffer;
 garm::gui::Window* window;
 garm::graphics::GUILayer* guiLayer;
@@ -69,16 +70,20 @@ bool TestApp::Init(){
 	CheckGLError();
 	garm::graphics::Vertex verts[] = {
 		{
-			glm::vec3(0.0f, 0.0f, -0.1f),
+			glm::vec3(0.0f, 0.0f, 0.1f),
 			glm::vec4(0.9f, 0.0f, 0.0f, 1.0f),
 			glm::vec2(0.0f, 1.0f)
 		},{
-			glm::vec3(500.0f, 500.0f, -0.1f),
-			glm::vec4(0.0f, 0.9f, 0.0f, 1.0f),
+			glm::vec3(500.0f, 0.0f, 0.1f),
+			glm::vec4(0.9f, 0.0f, 0.0f, 1.0f),
+			glm::vec2(1.0f, 1.0f)
+		},{
+			glm::vec3(500.0f, 500.0f, 0.1f),
+			glm::vec4(0.9f, 0.0f, 0.0f, 1.0f),
 			glm::vec2(1.0f, 0.0f)
 		},{
-			glm::vec3(0.0f, 500.0f, -0.1f),
-			glm::vec4(0.0f, 0.0f, 0.9f, 1.0f),
+			glm::vec3(0.0f, 500.0f, 0.1f),
+			glm::vec4(0.9f, 0.0f, 0.0f, 1.0f),
 			glm::vec2(0.0f, 0.0f)
 		}
 	};
@@ -88,10 +93,12 @@ bool TestApp::Init(){
 	shader->Use();
 	shader->SetUniform("p", m_projectionMatrix);
 	shader->SetUniform("m", glm::translate(glm::mat4(1), glm::vec3(50.0f, 100.0f, 0.0f)));
-	garm::graphics::MeshData mesh({ verts[0], verts[1], verts[2] });
-	buffer =  mesh.MakeBuffer();
+	garm::graphics::MeshData mesh({ verts[0], verts[1], verts[2], verts[3] });
+	mesh.GetIndexRef().insert(mesh.GetIndexRef().end(), { 0, 1, 2, 0, 2, 3 });
+	buffer = mesh.MakeBuffer();
+	ibuffer = mesh.MakeIndexBuffer();
 
-	fontRenderable = new garm::graphics::FontRenderable("!hei SaanN!", 48, { glm::vec4(0.9f, 0.2f, 0.3f, 1.0f) });
+	fontRenderable = new garm::graphics::FontRenderable("abcdefghijklmnopqrstu!~", 15, { glm::vec4(0.9f, 0.2f, 0.3f, 1.0f) });
 	CheckGLError();
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -99,6 +106,9 @@ bool TestApp::Init(){
 	guiLayer = new garm::graphics::GUILayer(glm::ortho(0.0f, 800.0f, 0.0f, 600.f));
 	window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
 	guiLayer->AddWindow(window);
+
+
+
 	return true;
 }
 
@@ -118,8 +128,24 @@ void TestApp::Render() {
 
 	guiLayer->m_shader->Use();
 	guiLayer->m_shader->SetUniform("mouse", mousepos);
-	guiLayer->OnRender();
+	//guiLayer->OnRender();
 
+	/*	// draw font texture onto screen, remember to manually set texture depth in shader
+	shader->Use();
+	FontManager_M->GetTexture()->Bind(0);
+
+	buffer->Bind();
+	ibuffer->Bind();
+	
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)sizeof(glm::vec3));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)(sizeof(glm::vec3) + sizeof(glm::vec4)));
+	shader->SetUniform("m", glm::translate(glm::mat4(1), glm::vec3(0.0f, 0.0f, 0.0f)));
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
+	*/
 	CheckGLError();
 	//shader->SetUniform("t", 0);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);

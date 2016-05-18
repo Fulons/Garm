@@ -1,6 +1,8 @@
+#include "../Utility.h"
 #include "FontRenderable.h"
 #include "MeshData.h"
 #include "FontMap.h"
+
 namespace garm{ namespace graphics{
 
 	FontRenderable::FontRenderable(){
@@ -33,13 +35,15 @@ namespace garm{ namespace graphics{
 		std::vector<GLushort> indices;
 		indices.reserve(m_string.length() * 6);
 		glm::vec2 textureSize = FontManager_M->GetTextureSize();
+		CheckGLError();
 		if (m_charColors.size() == 1) {
 			for (unsigned i = 0; i < m_string.length(); i++) {
-				Character c = FontManager_M->GetCharacter(m_string[i], 46);
-				verts.emplace_back(glm::vec3(advance, 0.0f, 0.0f), m_charColors[0], glm::vec3(c.pos.x / textureSize.x, (c.pos.y + c.size.y) / textureSize.y, c.textureID));
-				verts.emplace_back(glm::vec3(advance + c.size.x, 0.0f, 0.0f), m_charColors[0], glm::vec3((c.pos.x + c.size.x) / textureSize.x, (c.pos.y + c.size.y) / textureSize.y, c.textureID));
-				verts.emplace_back(glm::vec3(advance + c.size.x, c.size.y, 0.0f), m_charColors[0], glm::vec3((c.pos.x + c.size.x) / textureSize.x , c.pos.y / textureSize.y, c.textureID));
-				verts.emplace_back(glm::vec3(advance, c.size.y, 0.0f), m_charColors[0], glm::vec3(c.pos.x / textureSize.x, c.pos.y / textureSize.y, c.textureID));
+				Character c = FontManager_M->GetCharacter(m_string[i], m_fontSize);
+				CheckGLError();
+				verts.emplace_back(glm::vec3(advance + c.bearing.x, c.bearing.y - c.size.y , 0.0f),					m_charColors[0], glm::vec3(c.pos.x / textureSize.x,					(c.pos.y + c.size.y) / textureSize.y,	c.textureID));
+				verts.emplace_back(glm::vec3(advance + c.bearing.x + c.size.x, c.bearing.y - c.size.y, 0.0f),		m_charColors[0], glm::vec3((c.pos.x + c.size.x) / textureSize.x,	(c.pos.y + c.size.y) / textureSize.y,	c.textureID));
+				verts.emplace_back(glm::vec3(advance + c.bearing.x + c.size.x, c.bearing.y, 0.0f),	m_charColors[0], glm::vec3((c.pos.x + c.size.x) / textureSize.x ,	c.pos.y / textureSize.y,				c.textureID));
+				verts.emplace_back(glm::vec3(advance + c.bearing.x, c.bearing.y, 0.0f),				m_charColors[0], glm::vec3(c.pos.x / textureSize.x,					c.pos.y / textureSize.y,				c.textureID));
 				advance += c.advance >> 6;
 				indices.insert(indices.end(), {
 					(GLushort)(0 + i * 4), (GLushort)(1 + i * 4), (GLushort)(2 + i * 4),
@@ -47,6 +51,7 @@ namespace garm{ namespace graphics{
 				});
 			}	
 		}
+		CheckGLError();
 
 		m_buffer = new Buffer(sizeof(FontVertex) * verts.size(), GL_STATIC_DRAW, verts.data());
 		m_indexBuffer = new Buffer(sizeof(GLushort) * indices.size(), GL_STATIC_DRAW, indices.data(), GL_ELEMENT_ARRAY_BUFFER);
@@ -59,12 +64,13 @@ namespace garm{ namespace graphics{
 		m_buffer->Bind();
 		m_indexBuffer->Bind();
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::FontVertex), (GLvoid*)0);
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)sizeof(glm::vec3));
+		glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::FontVertex), (GLvoid*)sizeof(glm::vec3));
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)(sizeof(glm::vec3) + sizeof(glm::vec4)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::FontVertex), (GLvoid*)(sizeof(glm::vec3) + sizeof(glm::vec4)));
 		glDrawElements(GL_TRIANGLES, m_string.size() * 6, GL_UNSIGNED_SHORT, nullptr);
+		CheckGLError();
 	}
 
 } }

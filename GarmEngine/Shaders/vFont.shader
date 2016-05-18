@@ -15,6 +15,6 @@ void main() {
 	out_color = color;
 	gl_Position = p * m * vec4(position, 1.0f);
 	pos = m * vec4(position, 1.0f);
-	texCoord = vec2(UV.xy);
-	textureID = int(UV.z);
+	texCoord = UV.xy;
+	textureID = int(floor(UV.z + 0.5f));
 }

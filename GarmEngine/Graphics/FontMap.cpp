@@ -1,3 +1,4 @@
+#include "../Utility.h"
 #include "FontMap.h"
 #include <gl/glew.h>
 #include <ft2build.h>
@@ -111,6 +112,11 @@ namespace garm{ namespace graphics{
 		for (unsigned short i = 0; i < m_depth; i++)
 			m_nextPos_lineHeight.push_back(std::make_pair<glm::ivec2, unsigned short>(glm::ivec2(0, 0), 0));
 		LoadCharacters('!', '~');
+		SetTextureParameter(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		SetTextureParameter(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		SetTextureParameter(GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		SetTextureParameter(GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		SetTextureParameter(GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}	
 
 	Character FontMap::LoadChar(wchar_t c, FT_Face& face, unsigned mapIndex) {
@@ -118,7 +124,7 @@ namespace garm{ namespace graphics{
 			std::cout << "Failed to load glyph: " << (char)c << "\n" << std::endl;
 			return Character();
 		}
-		if (m_nextPos_lineHeight[mapIndex].first.x + (int)face->glyph->bitmap.width > m_size.x) {
+		if (m_nextPos_lineHeight[mapIndex].first.x + face->glyph->bitmap.width > m_size.x) {
 			m_nextPos_lineHeight[mapIndex].first.y += m_nextPos_lineHeight[mapIndex].second;
 			m_nextPos_lineHeight[mapIndex].first.x = 0;
 			//TODO: check y bounds
@@ -130,10 +136,13 @@ namespace garm{ namespace graphics{
 			(GLuint)face->glyph->advance.x,
 			(unsigned short)mapIndex
 		};
-		BufferSubData(face->glyph->bitmap.buffer, glm::ivec3(m_nextPos_lineHeight[mapIndex].first, mapIndex), glm::ivec3(ret.size, 1));
-		m_nextPos_lineHeight[mapIndex].second = m_nextPos_lineHeight[mapIndex].second > m_nextPos_lineHeight[mapIndex].first.y ? m_nextPos_lineHeight[mapIndex].second : m_nextPos_lineHeight[mapIndex].first.y;
+		CheckGLError();
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		BufferSubData(face->glyph->bitmap.buffer, glm::ivec3(ret.pos, mapIndex), glm::ivec3(ret.size.x, ret.size.y, 1));
+		m_nextPos_lineHeight[mapIndex].second = m_nextPos_lineHeight[mapIndex].second > ret.size.y ? m_nextPos_lineHeight[mapIndex].second : ret.size.y;
 		m_nextPos_lineHeight[mapIndex].first.x += ret.size.x;
 		m_characters[mapIndex][c] = ret;
+		CheckGLError();
 		return ret;
 	}
 
@@ -155,7 +164,7 @@ namespace garm{ namespace graphics{
 		FT_Face face = 0;
 
 		//Always load regular font
-		LoadFont(ft, face, G_FontPaths[m_normalFont + 2]);
+		LoadFont(ft, face, G_FontPaths[m_normalFont]);
 		for (unsigned size = 0; size < m_sizes.size(); size++) {
 			FT_Set_Pixel_Sizes(face, 0, m_sizes[size]);
 			for (wchar_t c = begin; c <= end; c++)
@@ -215,7 +224,10 @@ namespace garm{ namespace graphics{
 		for (unsigned i = 0; i < m_sizes.size(); i++) {
 			short deltaSize = abs(m_sizes[i] - size);
 			if (deltaSize == 0) return i;
-			if (deltaSize < lastSize) current = i;
+			if (deltaSize < lastSize) {
+				current = i;
+				lastSize = deltaSize;
+			}
 		}
 		return current;
 	}
@@ -224,6 +236,7 @@ namespace garm{ namespace graphics{
 		FT_Library ft;
 		if (FT_Init_FreeType(&ft)) {
 			std::cout << "Could not init Freetype!" << std::endl;
+			CheckGLError();
 			return Character();
 		}
 		FT_Face face = 0;
@@ -234,9 +247,9 @@ namespace garm{ namespace graphics{
 		LoadFont(ft, face, G_FontPaths[pathIndex]);
 		FT_Set_Pixel_Sizes(face, 0, m_sizes[sizeIndex]);
 		return LoadChar(c, face, mapIndex);
-
 		FT_Done_Face(face);
 		FT_Done_FreeType(ft);
+		CheckGLError();
 	}
 
 	const Character FontMap::GetCharacter(wchar_t c, short hintSize, bool bold, bool italic)
@@ -261,10 +274,12 @@ namespace garm{ namespace graphics{
 				else index = sizeIndex + m_sizes.size();
 			}
 		}
+			CheckGLError();
 		if (index == -1) {
 			return Character();
 			assert(false);	//TODO: print and log error
 		}
+		
 		auto character = m_characters[index].find(c);
 		if (character == m_characters[index].end()) return LoadCharacter(c, sizeIndex, index, bold, italic);
 		else return character->second;
@@ -305,7 +320,7 @@ namespace garm{ namespace graphics{
 	void graphics::FontManager::Init(){
 		if(m_instance == nullptr)
 			m_instance = new FontManager();
-		m_instance->m_fontMap = new FontMap(FONT_SCP_M, { 8, 12, 16, 20, 24, 48 }, FONT_LOAD_BOLD_AND_ITALIC);
+		m_instance->m_fontMap = new FontMap(FONT_SCP_M, { 8,  16,  24, 48 }, FONT_LOAD_BOLD_AND_ITALIC);
 		//TODO: ERROR?
 	}
 
