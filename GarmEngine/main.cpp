@@ -61,7 +61,7 @@ garm::graphics::Buffer* ibuffer;
 garm::graphics::Buffer* buffer;
 garm::gui::Window* window;
 garm::graphics::GUILayer* guiLayer;
-
+glm::vec2 mousepos;
 GLuint VAO, VBO, IBO;
 
 bool TestApp::Init(){
@@ -121,14 +121,15 @@ void TestApp::Render() {
 	glClearColor(0.05f, 0.075f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	guiLayer->m_shader->Use();
+	guiLayer->m_shader->SetUniform("mouse", mousepos);
+	guiLayer->OnRender();
+
 	shader->Use();
-	glm::vec2 mousepos(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
+	mousepos = glm::vec2(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
 	shader->SetUniform("mouse", mousepos);
 	fontRenderable->Render(shader);
 
-	guiLayer->m_shader->Use();
-	guiLayer->m_shader->SetUniform("mouse", mousepos);
-	//guiLayer->OnRender();
 
 	/*	// draw font texture onto screen, remember to manually set texture depth in shader
 	shader->Use();

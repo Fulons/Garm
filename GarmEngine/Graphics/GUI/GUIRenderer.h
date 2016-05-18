@@ -58,6 +58,7 @@ namespace garm { namespace graphics{
 	};
 
 	class Buffer;
+	struct Vertex;
 
 	class GUIRenderer : public Renderer {
 		BitmapFragmentMap* m_textureMap;

@@ -1,6 +1,6 @@
 #include "GUIRenderer.h"
 #include "../Buffer.h"
-
+#include "../Vertex.h"
 #include <iostream>
 #include <soil/SOIL.h>
 

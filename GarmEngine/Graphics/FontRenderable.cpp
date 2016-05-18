@@ -59,7 +59,7 @@ namespace garm{ namespace graphics{
 	}
 	
 	void FontRenderable::Render(Shader * shader){
-		shader->SetUniform("t", 0);
+		//shader->SetUniform("t", 0);
 		m_texture->Bind(0);
 		m_buffer->Bind();
 		m_indexBuffer->Bind();
