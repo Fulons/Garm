@@ -20,6 +20,7 @@ namespace garm { namespace gui {
 		m_backgroundSprite.size = m_size;
 		m_backgroundSprite.type = graphics::GUI_TEXTURE_FRAGMENT_TYPE_COLOR;
 		m_backgroundSprite.color = glm::vec4(0.39f, 0.58f, 0.93f, 1.0f);
+		Listener<InputListener>::AttachTo(InputHandler_M);
 	}
 
 	void Window::Close(){

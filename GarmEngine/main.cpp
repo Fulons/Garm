@@ -120,7 +120,7 @@ void TestApp::Render() {
 
 	guiLayer->m_fontShader->Use();
 	guiLayer->m_fontShader->SetUniform("mouse", mousepos);
-	mousepos = glm::vec2(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
+	mousepos = glm::vec2(InputHandler_M->GetMousePos().x, -InputHandler_M->GetMousePos().y + GetClientHeight());
 	fontRenderable->Render(guiLayer->m_fontShader);
 
 

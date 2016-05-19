@@ -72,14 +72,26 @@ namespace garm {
 			PostQuitMessage(0);
 			return 0;
 		case WM_MOUSEMOVE:
-			InputHandler::MouseMove(glm::ivec2(LOWORD(lParam), HIWORD(lParam)));
+			InputHandler_M->MouseMove(glm::ivec2(LOWORD(lParam), HIWORD(lParam)));
+			break;
+		case WM_LBUTTONDOWN:
+			InputHandler_M->LMB(true);
+			break;
+		case WM_RBUTTONDOWN:
+			InputHandler_M->RMB(true);
+			break;
+		case WM_LBUTTONUP:
+			InputHandler_M->LMB(false);
+			break;
+		case WM_RBUTTONUP:
+			InputHandler_M->RMB(false);
 			break;
 		case WM_KEYDOWN:
 			if (wParam == VK_ESCAPE) PostQuitMessage(0);
-			garm::InputHandler::KeyDown(wParam);
+			InputHandler_M->KeyDown(wParam);
 			break;
 		case WM_KEYUP:
-			garm::InputHandler::KeyUp(wParam);
+			InputHandler_M->KeyUp(wParam);
 			break;
 		default:;
 		}

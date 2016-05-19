@@ -157,6 +157,7 @@
     <ClInclude Include="Graphics\GUI\GUILayer.h" />
     <ClInclude Include="Graphics\GUI\GUIRenderer.h" />
     <ClInclude Include="Graphics\GUI\header.h" />
+    <ClInclude Include="Graphics\GUI\Event.h" />
     <ClInclude Include="Graphics\GUI\Widget.h" />
     <ClInclude Include="Graphics\GUI\Window.h" />
     <ClInclude Include="Graphics\Material.h" />

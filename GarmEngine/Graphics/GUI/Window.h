@@ -1,6 +1,6 @@
 #pragma once
 #include "Widget.h"
-
+#include "../../Context/InputHandler.h"
 #define GUI_WINDOW_HEADER_HEIGHT 20
 
 #define IS_FLAG_SET(flag, flags) ((flag & flags) == flag)
@@ -18,7 +18,7 @@ namespace garm {
 
 	class Header;
 
-	class Window : public Widget {
+	class Window : public Widget, public event::Listener<InputListener> {
 	protected:
 		std::string m_name;
 		bool m_headerOnly = false;
@@ -31,6 +31,9 @@ namespace garm {
 		void ToggleHeaderOnly();
 		const std::string& GetName() { return m_name; }
 		virtual void Render(graphics::GUIRenderer* renderer) override;
+
+		bool MouseLClick(InputHandler* src, glm::ivec2) override { return true; }
+		bool MouseRClick(InputHandler* src, glm::ivec2) override { return true; }
 	};
 
 	

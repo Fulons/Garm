@@ -6,16 +6,12 @@ namespace garm { namespace gui {
 
 	Widget::Widget(const Widget * parent)
 	: m_parent(parent), m_visible(GUI_WIDGET_STD_VISIBILITY), m_enabled(GUI_WIDGET_STD_ENABLE),
-	m_focused(GUI_WIDGET_STD_FOCUSE), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUSE){}
+	m_focused(GUI_WIDGET_STD_FOCUS), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUS), event::Notifier<WidgetListener>(){}
 	
 	Widget::Widget(const Widget * parent, glm::ivec2 pos, glm::ivec2 size)
 	: m_parent(parent), m_pos(pos), m_size(size),
 	m_visible(GUI_WIDGET_STD_VISIBILITY), m_enabled(GUI_WIDGET_STD_ENABLE),
-	m_focused(GUI_WIDGET_STD_FOCUSE), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUSE){}
-
-	Widget::~Widget(){
-
-	}
+	m_focused(GUI_WIDGET_STD_FOCUS), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUS), event::Notifier<WidgetListener>(){}
 
 	void Widget::AddChild(Widget * child){
 		m_children.push_back(child);
@@ -30,8 +26,7 @@ namespace garm { namespace gui {
 		}
 	}
 
-	bool Widget::Contains(glm::ivec2 point)
-	{
+	bool Widget::Contains(glm::ivec2 point) {
 		if (point.x < m_pos.x) return false;
 		if (point.x > m_pos.x + m_size.x) return false;
 		if (point.y < m_pos.y) return false;
@@ -39,7 +34,7 @@ namespace garm { namespace gui {
 		return true;
 	}
 
-	void Widget::Render(GUIRenderer* renderer){
+	void Widget::Render(GUIRenderer* renderer) {
 		for (auto child : m_children) {
 			if (child->Visible())
 				child->Render(renderer);
