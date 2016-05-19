@@ -23,7 +23,7 @@ namespace garm { namespace graphics{
 	};
 
 	//TODO: currently fragments contains artifacts of neighbouring fragments, need to have a border inbetween
-	class BitmapFragmentMap : public Texture {
+	class BitmapFragmentMap : public TextureOld {
 	public:
 		class Fragment {
 			Fragment* m_child[2];
@@ -58,6 +58,7 @@ namespace garm { namespace graphics{
 	};
 
 	class Buffer;
+	struct Vertex;
 
 	class GUIRenderer : public Renderer {
 		BitmapFragmentMap* m_textureMap;

@@ -2,7 +2,7 @@
 #include <gl/glew.h>
 
 namespace garm { namespace graphics{
-	class Texture;
+	class TextureOld;
 	enum DiagonalTextureTypes : unsigned {
 		DIAG_TEXT_1 = 1,
 		DIAG_TEXT_2,
@@ -28,40 +28,40 @@ namespace garm { namespace graphics{
 
 	class TextureGenerator {
 	public:
-		static Texture* Diagonal(
+		static TextureOld* Diagonal(
 			DiagonalTextureTypes type,
 			float color1Intesity = 1.0f,
 			float color2Intesity = 0.5f,
 			float color3Intesity = 0.3f);
-		static Texture* Pattern(
+		static TextureOld* Pattern(
 			PatternTextureType type,
 			float color1Intesity = 1.0f,
 			float color2Intesity = 0.5f,
 			float color3Intesity = 0.3f);
-		static Texture* Faded(
+		static TextureOld* Faded(
 			FadeTextureType type,
 			float startIntensity,
 			float endIntensity,
 			unsigned resolution);
-		static Texture* SimpleTexture(
+		static TextureOld* SimpleTexture(
 			unsigned type,
 			float color1Intesity = 1.0f,
 			float color2Intesity = 0.5f,
 			float color3Intesity = 0.3f);
 	private:
-		static Texture* MakeDiagTexture1(GLubyte byteIntesity1, GLubyte byteIntesity2);
-		static Texture* MakeDiagTexture2(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
-		static Texture* MakeDiagTexture3(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
-		static Texture* MakeDiagTexture4(GLubyte byteIntesity1, GLubyte byteIntesity2);
-		static Texture* MakeDiagTexture5(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
-		static Texture* MakeDiagTexture6(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
-		static Texture* MakeDiagTexture7(GLubyte byteIntesity1, GLubyte byteIntesity2);
+		static TextureOld* MakeDiagTexture1(GLubyte byteIntesity1, GLubyte byteIntesity2);
+		static TextureOld* MakeDiagTexture2(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
+		static TextureOld* MakeDiagTexture3(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
+		static TextureOld* MakeDiagTexture4(GLubyte byteIntesity1, GLubyte byteIntesity2);
+		static TextureOld* MakeDiagTexture5(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
+		static TextureOld* MakeDiagTexture6(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
+		static TextureOld* MakeDiagTexture7(GLubyte byteIntesity1, GLubyte byteIntesity2);
 
-		static Texture* MakePatternTexture1(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
-		static Texture* MakePatternTexture2(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
-		static Texture* MakePatternTexture3(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
+		static TextureOld* MakePatternTexture1(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
+		static TextureOld* MakePatternTexture2(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
+		static TextureOld* MakePatternTexture3(GLubyte byteIntesity1, GLubyte byteIntesity2, GLubyte byteIntesity3);
 
-		static Texture* MakeLinearFaded(float startIntensity, float endIntensity, unsigned resolution);
+		static TextureOld* MakeLinearFaded(float startIntensity, float endIntensity, unsigned resolution);
 	};
 
 }}
