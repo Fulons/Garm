@@ -58,6 +58,7 @@ namespace garm { namespace graphics{
 	};
 
 	class Buffer;
+	class FontRenderable;
 	struct Vertex;
 
 	class GUIRenderer : public Renderer {
@@ -66,6 +67,8 @@ namespace garm { namespace graphics{
 		Vertex* m_mappedBuffer;
 		Buffer* m_indexBuffer;
 		
+		std::vector<FontRenderable*> m_fontRenderables;
+
 		unsigned m_bufferSpriteCount;
 		unsigned m_currentSpriteCount = 0;
 		std::vector<glm::ivec2> m_positionStack;
@@ -75,9 +78,10 @@ namespace garm { namespace graphics{
 	public:
 		GUIRenderer();
 		virtual void Render(Shader* shader) override{}
+		virtual void RenderFont(Shader* shader);
 		virtual void Begin();
 		virtual void AddSprite(const GUISprite& sprite);
-		virtual void AddText(const std::string& text, const std::vector<glm::vec4>& colors);
+		virtual void AddText(FontRenderable* renderable);
 		virtual void End();
 		virtual void PushPosition(glm::ivec2 pos);
 		virtual void PopPosition();

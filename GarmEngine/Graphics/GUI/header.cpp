@@ -1,6 +1,7 @@
 #include "header.h"
 #include "Button.h"
 #include "Window.h"
+#include "../FontRenderable.h"
 
 namespace garm { namespace gui {
 
@@ -19,6 +20,8 @@ namespace garm { namespace gui {
 			[parent]() { parent->ToggleHeaderOnly(); },
 			graphics::GUI_TEXTURE_FRAGMENT_TYPE_BUTTON_TOGGLEHONLY));
 
+		m_textRenderable = new graphics::FontRenderable(parent->GetName(), GUI_WINDOW_HEADER_HEIGHT, { glm::vec4(0.8f, 0.8f, 0.8f, 1.0f) });
+
 		m_backgroundSprite.size = m_size;
 		m_backgroundSprite.color = glm::vec4(1.0f, 0.58f, 0.93f, 1.0f);
 		m_backgroundSprite.type = graphics::GUI_TEXTURE_FRAGMENT_TYPE_FADE_UP_INVERSE;
@@ -28,6 +31,9 @@ namespace garm { namespace gui {
 		if (!m_visible) return;
 		renderer->PushPosition(m_pos);
 		renderer->AddSprite(m_backgroundSprite);
+		renderer->PushPosition(glm::ivec2(3, 5));
+		renderer->AddText(m_textRenderable);
+		renderer->PopPosition();
 		Widget::Render(renderer);
 		renderer->PopPosition();
 	}

@@ -144,6 +144,7 @@ namespace garm{ namespace graphics{
 	
 	void FontRenderable::Render(Shader * shader){
 		m_texture->Bind(0);
+		shader->SetUniform("m", m_modelMatrix);
 		m_buffer->Bind();
 		m_indexBuffer->Bind();
 		glEnableVertexAttribArray(0);

@@ -13,8 +13,10 @@ namespace garm { namespace graphics {
 		glm::mat4 m_projectionMatrix;
 		std::vector<gui::Window*> m_windows;
 		GUIRenderer* m_renderer;
-	public:
 		Shader* m_shader;
+	public:
+		Shader* m_fontShader;
+		inline Shader* GetShader() { return m_shader; }
 		GUILayer(glm::mat4 projection);
 		void AddWindow(gui::Window* window);
 		virtual void OnRender() override;

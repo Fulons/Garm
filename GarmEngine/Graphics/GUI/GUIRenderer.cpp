@@ -1,6 +1,7 @@
 #include "GUIRenderer.h"
 #include "../Buffer.h"
 #include "../Vertex.h"
+#include "../FontRenderable.h"
 #include <iostream>
 #include <soil/SOIL.h>
 
@@ -102,6 +103,8 @@ namespace garm{ namespace graphics{
 		return ret->second;
 	}
 
+	//////////////////////////////////////////////////////////////////
+
 	void GUIRenderer::GetUV(std::vector<glm::vec2>& uv, TextureFragmentType type){
 		BitmapFragmentMap::Fragment* texture = m_textureMap->Get(type);
 		glm::vec2 uvPos = glm::vec2(texture->GetPos()) / glm::vec2(m_textureMap->GetSize());
@@ -168,7 +171,13 @@ namespace garm{ namespace graphics{
 		m_indexBuffer->UnmapBuffer();
 	}
 
-	void GUIRenderer::Begin(){	
+	void GUIRenderer::RenderFont(Shader * shader){
+		for (auto fontRenderable : m_fontRenderables)
+			fontRenderable->Render(shader);
+		m_fontRenderables.clear();
+	}
+
+	void GUIRenderer::Begin(){
 		m_mappedBuffer = (Vertex*)m_buffer->MapBufferWrite();
 	}
 
@@ -213,8 +222,9 @@ namespace garm{ namespace graphics{
 		m_currentSpriteCount++;
 	}
 
-	void GUIRenderer::AddText(const std::string & text, const std::vector<glm::vec4>& colors){
-
+	void GUIRenderer::AddText(FontRenderable * renderable){
+		renderable->UpdateModelMatrix(glm::translate(glm::mat4(1), glm::vec3(m_positionStack.back(), 1.0f)));
+		m_fontRenderables.push_back(renderable);
 	}
 
 	void GUIRenderer::Flush(){

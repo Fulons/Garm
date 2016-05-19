@@ -92,12 +92,12 @@ bool TestApp::Init(){
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	fontRenderable->SetString("new");
-	fontRenderable->SetColor({ glm::vec4(0.2f, 0.8f, 0.6f, 1.0f) });
-	fontRenderable->SetFontSize(48);
-	fontRenderable->RefreshBuffer();
+	//fontRenderable->SetString("new");
+	//fontRenderable->SetColor({ glm::vec4(0.2f, 0.8f, 0.6f, 1.0f) });
+	//fontRenderable->SetFontSize(48);
+	//fontRenderable->RefreshBuffer();m_projectionMatrix
 
-	guiLayer = new garm::graphics::GUILayer(glm::ortho(0.0f, 800.0f, 0.0f, 600.f));
+	guiLayer = new garm::graphics::GUILayer(m_projectionMatrix);
 	window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
 	guiLayer->AddWindow(window);
 
@@ -113,18 +113,19 @@ void TestApp::Render() {
 	glClearColor(0.05f, 0.075f, 0.2f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	guiLayer->m_shader->Use();
-	guiLayer->m_shader->SetUniform("mouse", mousepos);
+	guiLayer->GetShader()->Use();
+	guiLayer->GetShader()->SetUniform("mouse", mousepos);
 	guiLayer->OnRender();
 
-	shader->Use();
+
+	guiLayer->m_fontShader->Use();
+	guiLayer->m_fontShader->SetUniform("mouse", mousepos);
 	mousepos = glm::vec2(garm::InputHandler::GetMousePos().x, -garm::InputHandler::GetMousePos().y + GetClientHeight());
-	shader->SetUniform("mouse", mousepos);
-	fontRenderable->Render(shader);
+	fontRenderable->Render(guiLayer->m_fontShader);
 
 
-	/*	// draw font texture onto screen, remember to manually set texture depth in shader
-	shader->Use();
+	// draw font texture onto screen, remember to manually set texture depth in shader
+	/*shader->Use();
 	FontManager_M->GetTexture()->Bind(0);
 
 	buffer->Bind();

@@ -29,6 +29,7 @@ namespace garm {
 		Window(std::string name, glm::ivec2 pos, glm::ivec2 size, unsigned flags);
 		void Close();
 		void ToggleHeaderOnly();
+		const std::string& GetName() { return m_name; }
 		virtual void Render(graphics::GUIRenderer* renderer) override;
 	};
 

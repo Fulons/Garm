@@ -4,6 +4,7 @@
 namespace garm { namespace graphics {
 
 	//contains renderer, renderables, proj matrix / camera, ~shader
+	// and most importantly glState like e.g depth range
 	class Layer {
 	private:
 		bool m_Visible;
