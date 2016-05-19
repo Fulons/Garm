@@ -220,6 +220,7 @@ namespace garm{ namespace graphics{
 	void GUIRenderer::Flush(){
 		m_textureMap->Bind(0);
 		m_buffer->UnmapBuffer();
+		m_indexBuffer->Bind();
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)0);
@@ -228,7 +229,7 @@ namespace garm{ namespace graphics{
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(garm::graphics::Vertex), (GLvoid*)(sizeof(glm::vec3) + sizeof(glm::vec4)));
 		
-		glDrawElements(GL_TRIANGLES, m_currentSpriteCount * 6, GL_UNSIGNED_SHORT, nullptr);
+		glDrawElements(GL_TRIANGLES, m_currentSpriteCount * 6 + 6, GL_UNSIGNED_SHORT, nullptr);
 	}
 
 	void GUIRenderer::End(){

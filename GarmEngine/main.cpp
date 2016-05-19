@@ -3,17 +3,6 @@
 #include "Graphics/Shader.h"
 #include "Context/InputHandler.h"
 
-//Soon to be removed?
-//#include "Graphics/VertexArray.h"
-//#include "Graphics/Mesh2D.h"
-//#include "Graphics/Renderable2D.h"
-//#include "Graphics/Renderer.h"
-//#include "Graphics/Layer.h"
-//#include "Graphics/Group2D.h"
-//#include "Graphics/Texture.h"
-//#include "Graphics/Simple2DLayer.h"
-//#include "Graphics/TextRendering.h"
-
 #include "Graphics/MeshData.h"
 #include "Math.h"
 #include "Graphics/FontRenderable.h"
@@ -103,14 +92,14 @@ bool TestApp::Init(){
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	guiLayer = new garm::graphics::GUILayer(glm::ortho(0.0f, 800.0f, 0.0f, 600.f));
-	window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
-	guiLayer->AddWindow(window);
-
 	fontRenderable->SetString("new");
 	fontRenderable->SetColor({ glm::vec4(0.2f, 0.8f, 0.6f, 1.0f) });
 	fontRenderable->SetFontSize(48);
 	fontRenderable->RefreshBuffer();
+
+	guiLayer = new garm::graphics::GUILayer(glm::ortho(0.0f, 800.0f, 0.0f, 600.f));
+	window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
+	guiLayer->AddWindow(window);
 
 	return true;
 }
@@ -151,7 +140,4 @@ void TestApp::Render() {
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
 	*/
 	CheckGLError();
-	//shader->SetUniform("t", 0);
-	//glDrawArrays(GL_TRIANGLES, 0, 3);
-
 }
