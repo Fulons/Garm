@@ -98,7 +98,7 @@ bool TestApp::Init(){
 	buffer = mesh.MakeBuffer();
 	ibuffer = mesh.MakeIndexBuffer();
 
-	fontRenderable = new garm::graphics::FontRenderable("abcdefghijklmnopqrstu!~", 15, { glm::vec4(0.9f, 0.2f, 0.3f, 1.0f) });
+	fontRenderable = new garm::graphics::FontRenderable("heipadeg", 15, { glm::vec4(0.9f, 0.2f, 0.3f, 1.0f) });
 	CheckGLError();
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -107,7 +107,10 @@ bool TestApp::Init(){
 	window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
 	guiLayer->AddWindow(window);
 
-
+	fontRenderable->SetString("new");
+	fontRenderable->SetColor({ glm::vec4(0.2f, 0.8f, 0.6f, 1.0f) });
+	fontRenderable->SetFontSize(48);
+	fontRenderable->RefreshBuffer();
 
 	return true;
 }

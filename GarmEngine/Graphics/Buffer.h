@@ -9,7 +9,6 @@ namespace garm{ namespace graphics{
 		GLenum m_target = GL_ARRAY_BUFFER;
 		GLuint m_bufferID;
 		GLsizeiptr m_size;
-		GLsizei m_vertexCount;
 		Buffer(GLuint bufferID);
 	public:
 		Buffer();
@@ -21,6 +20,10 @@ namespace garm{ namespace graphics{
 		virtual void Bind(GLenum target = -1);
 		virtual void* MapBufferWrite();
 		virtual void UnmapBuffer();
+		GLsizeiptr GetSize() { return m_size; }
+		template <typename var>
+		unsigned GetVarCount() { return m_size / sizeof(var); }
+		void SetTarget(GLenum target) { m_target = target; }
 	};
 
 } }
