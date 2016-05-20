@@ -18,6 +18,11 @@ namespace garm {
 		else m_rmb.lastUp = Context::GetContext()->GetCurentTime();
 	}
 
+	void InputHandler::MouseMove(glm::ivec2 pos){
+		m_mouse.MoveMouse(pos);
+		Notify(&InputListener::MouseMove, m_mouse.lastMouseMove);
+	}
+
 	void InputHandler::LMB(bool down) {
 		if (down && !m_mouse.IsLMBDown())
 			Notify(&InputListener::MouseLDown, m_mouse.mousePos);

@@ -30,21 +30,23 @@ namespace garm { namespace gui {
 
 	class Widget : public event::Notifier<WidgetListener>, public event::Listener<WidgetListener> {
 	protected:
-		const Widget* m_parent = nullptr;
+		Widget* m_parent = nullptr;
 		bool m_visible, m_enabled;
 		bool m_focused, m_mouseFocus;
 		std::vector<Widget*> m_children;
 		glm::ivec2 m_pos, m_size;
 	public:
 		//virtual void Widget_Event(Widget* src, int data) override {std::cout << "Wof " << std::endl;}
-		Widget(const Widget* parent);
-		Widget(const Widget* parent, glm::ivec2 pos, glm::ivec2 size);
+		Widget(Widget* parent);
+		Widget(Widget* parent, glm::ivec2 pos, glm::ivec2 size);
 		Widget& operator=(const Widget& o){}
 		virtual ~Widget(){}
 		void AddChild(Widget* child);
 		void RemoveChild(Widget* child);
 		void SetPosition(glm::ivec2 pos) { m_pos = pos; }
 		void SetSize(glm::ivec2 size) { m_size = size; }
+
+		void Move(glm::ivec2 distance) { m_pos += distance; }
 
 		bool Visible() const { return m_visible; }
 		bool Enabled() const { return m_enabled; }
@@ -66,6 +68,8 @@ namespace garm { namespace gui {
 
 		virtual bool MouseLClick(glm::ivec2 point);
 		virtual bool MouseRClick(glm::ivec2 point);
+
+		virtual bool MouseMove(glm::ivec2 distance);
 
 		virtual void Render(graphics::GUIRenderer* renderer);
 	};

@@ -110,4 +110,12 @@ namespace garm { namespace graphics{
 		return true;
 	}
 
+	bool GUILayer::MouseMove(InputHandler * src, glm::ivec2 distance){
+		distance.x = -distance.x;
+		for (auto i : m_windows) {
+			if (!i->MouseMove(distance)) return false;
+		}
+		return true;
+	}
+
 } }

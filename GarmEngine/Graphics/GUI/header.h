@@ -15,9 +15,13 @@ namespace garm{
 	class Header : public Widget {
 		graphics::GUISprite m_backgroundSprite;
 		graphics::FontRenderable* m_textRenderable;
+		bool m_dragMode = false;
 	public:
 		Header(Window* parent, glm::ivec2 pos, glm::ivec2 size);
 		virtual void Render(graphics::GUIRenderer* renderer);
+		virtual bool MouseLDown(glm::ivec2 point) override;
+		virtual bool MouseLUp(glm::ivec2 point) override;
+		virtual bool MouseMove(glm::ivec2 distance) override;
 	};
 
 } }

@@ -38,4 +38,26 @@ namespace garm { namespace gui {
 		renderer->PopPosition();
 	}
 
+	bool Header::MouseLDown(glm::ivec2 point) {
+		if(!Widget::MouseLDown(point))
+			m_dragMode = true;
+		return false;
+	}
+
+	bool Header::MouseLUp(glm::ivec2 point){
+		if (m_dragMode) {
+			m_dragMode = false;
+			return false;
+		}
+		return true;
+	}
+
+	bool Header::MouseMove(glm::ivec2 distance){
+		if (m_dragMode) {
+			m_parent->Move(distance);
+			return false;
+		}
+		return true;
+	}
+
 } }

@@ -25,6 +25,8 @@ namespace garm {
 
 		virtual bool MouseLClick(InputHandler* src, glm::ivec2 point) { return true; }
 		virtual bool MouseRClick(InputHandler* src, glm::ivec2 point) { return true; }
+		
+		virtual bool MouseMove(InputHandler* src, glm::ivec2 distance) { return true; }
 	};
 
 	class InputHandler : public event::Notifier<InputListener> {
@@ -72,7 +74,7 @@ namespace garm {
 		friend class Context;
 		inline void KeyDown(short key) { m_keys[key].isDown = true;	}
 		inline void KeyUp(short key) { m_keys[key].isDown = false; }
-		inline void MouseMove(glm::ivec2 pos) { m_mouse.MoveMouse(pos); }
+		void MouseMove(glm::ivec2 pos);
 		void LMB(bool down);
 		void RMB(bool down);
 	};

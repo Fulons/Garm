@@ -49,6 +49,7 @@ garm::graphics::FontRenderable* fontRenderable;
 garm::graphics::Buffer* ibuffer;
 garm::graphics::Buffer* buffer;
 garm::gui::Window* window;
+garm::gui::Window* console;
 garm::graphics::GUILayer* guiLayer;
 glm::vec2 mousepos;
 GLuint VAO, VBO, IBO;
@@ -99,6 +100,10 @@ bool TestApp::Init(){
 
 	guiLayer = new garm::graphics::GUILayer(m_projectionMatrix);
 	window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
+	console = new garm::gui::Window("Console", glm::ivec2(400, 100), glm::ivec2(300, 150), garm::gui::GUI_WINDOW_HEADER);
+	guiLayer->AddWindow(console);
+	console = new garm::gui::Window("Console3", glm::ivec2(400, 400), glm::ivec2(300, 150), garm::gui::GUI_WINDOW_HEADER);
+	guiLayer->AddWindow(console);
 	guiLayer->AddWindow(window);
 
 	return true;

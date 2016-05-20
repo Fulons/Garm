@@ -4,11 +4,11 @@ using garm::graphics::GUIRenderer;
 
 namespace garm { namespace gui {
 
-	Widget::Widget(const Widget * parent)
+	Widget::Widget(Widget * parent)
 	: m_parent(parent), m_visible(GUI_WIDGET_STD_VISIBILITY), m_enabled(GUI_WIDGET_STD_ENABLE),
 	m_focused(GUI_WIDGET_STD_FOCUS), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUS), event::Notifier<WidgetListener>(){}
 	
-	Widget::Widget(const Widget * parent, glm::ivec2 pos, glm::ivec2 size)
+	Widget::Widget(Widget * parent, glm::ivec2 pos, glm::ivec2 size)
 	: m_parent(parent), m_pos(pos), m_size(size),
 	m_visible(GUI_WIDGET_STD_VISIBILITY), m_enabled(GUI_WIDGET_STD_ENABLE),
 	m_focused(GUI_WIDGET_STD_FOCUS), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUS), event::Notifier<WidgetListener>(){}
@@ -103,6 +103,12 @@ namespace garm { namespace gui {
 				if (i->MouseRClick(point)) return true;
 		}
 		return false;
+	}
+
+	bool Widget::MouseMove(glm::ivec2 distance){
+		for (auto i : m_children)
+			if (!i->MouseMove(distance)) return false;
+		return true;
 	}
 
 	void Widget::Render(GUIRenderer* renderer) {

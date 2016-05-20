@@ -32,6 +32,8 @@ namespace garm { namespace graphics {
 
 		virtual bool MouseLClick(InputHandler* src, glm::ivec2 point) override;
 		virtual bool MouseRClick(InputHandler* src, glm::ivec2 point) override;
+
+		virtual bool MouseMove(InputHandler* src, glm::ivec2 distance) override;
 	};
 
 } }
