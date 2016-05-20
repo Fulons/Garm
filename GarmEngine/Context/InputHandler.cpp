@@ -18,6 +18,23 @@ namespace garm {
 		else m_rmb.lastUp = Context::GetContext()->GetCurentTime();
 	}
 
+	bool InputHandler::TakeInUnicode(const std::function<void(unsigned)> &func, void * who) {
+		if (who != nullptr) return false;
+		m_UnicodeCallback = func;
+		m_overrideWithUnicode = true;
+		m_whoOverridesUnicode = who;
+		return true;
+	}
+
+	bool InputHandler::StopTakingUnicode(void * who) {
+		if (m_whoOverridesUnicode == who) {
+			m_overrideWithUnicode = false;
+			who = nullptr;
+			return true;
+		}
+		return false;
+	}
+
 	void InputHandler::MouseMove(glm::ivec2 pos){
 		m_mouse.MoveMouse(pos);
 		Notify(&InputListener::MouseMove, m_mouse.lastMouseMove);

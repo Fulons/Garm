@@ -10,6 +10,7 @@
 #include "Graphics/GUI/Window.h"
 #include "Graphics/GUI/GUIRenderer.h"
 #include "Graphics/GUI/GUILayer.h"
+	#include "Graphics/GUI/TextField.h"
 
 #include <iostream>
 
@@ -50,6 +51,7 @@ garm::graphics::Buffer* ibuffer;
 garm::graphics::Buffer* buffer;
 garm::gui::Window* window;
 garm::gui::Window* console;
+garm::gui::TextField* textField;
 garm::graphics::GUILayer* guiLayer;
 glm::vec2 mousepos;
 GLuint VAO, VBO, IBO;
@@ -102,9 +104,9 @@ bool TestApp::Init(){
 	window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
 	console = new garm::gui::Window("Console", glm::ivec2(400, 100), glm::ivec2(300, 150), garm::gui::GUI_WINDOW_HEADER);
 	guiLayer->AddWindow(console);
-	console = new garm::gui::Window("Console3", glm::ivec2(400, 400), glm::ivec2(300, 150), garm::gui::GUI_WINDOW_HEADER);
-	guiLayer->AddWindow(console);
 	guiLayer->AddWindow(window);
+	textField = new garm::gui::TextField(console, glm::ivec2(2, 2), glm::ivec2(296, 50));
+	console->AddChild(textField);
 
 	return true;
 }

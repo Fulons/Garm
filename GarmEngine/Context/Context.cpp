@@ -75,6 +75,8 @@ namespace garm {
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			return 0;
+		case WM_CHAR:
+			return 0;
 		case WM_MOUSEMOVE:
 			InputHandler_M->MouseMove(glm::ivec2(LOWORD(lParam), HIWORD(lParam)));
 			break;

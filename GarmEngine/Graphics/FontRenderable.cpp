@@ -72,6 +72,8 @@ namespace garm{ namespace graphics{
 	}	
 
 	void FontRenderable::MakeBuffer(){
+		m_texture = FontManager_M->GetTexture();
+		if (m_string.size() == 0) return;
 		MeshData mesh;
 		std::vector<FontVertex> verts;
 		verts.reserve(m_string.length() * 4);
@@ -98,8 +100,6 @@ namespace garm{ namespace graphics{
 
 		m_buffer->BufferData(sizeof(FontVertex) * verts.size(), GL_STATIC_DRAW, verts.data());
 		m_indexBuffer->BufferData(sizeof(GLushort) * indices.size(), GL_STATIC_DRAW, indices.data());
-
-		m_texture = FontManager_M->GetTexture();
 	}
 
 	void FontRenderable::MakeCharVerts(std::vector<FontVertex>& verts, const Character & c, unsigned advance, const glm::vec2& textureSize){

@@ -3,6 +3,7 @@
 #include "../Math.h"
 #include "../Graphics/GUI/Event.h"
 #include "Context.h"
+#include <functional>
 
 #define NUM_KEYS 255
 
@@ -69,11 +70,17 @@ namespace garm {
 		}
 		inline glm::ivec2 GetMousePos() { return m_mouse.mousePos; }
 		inline bool IsKeyDown(short key) { return m_keys[key].isDown; }
-		
+		bool TakeInUnicode(const std::function<void(unsigned)>& func, void* who);
+		bool StopTakingUnicode(void* who);
+
 	private:
+		std::function<void(unsigned)> m_UnicodeCallback;
+		bool m_overrideWithUnicode = false;
+		void* m_whoOverridesUnicode = nullptr;
 		friend class Context;
 		inline void KeyDown(short key) { m_keys[key].isDown = true;	}
 		inline void KeyUp(short key) { m_keys[key].isDown = false; }
+		inline void UnicodeIn(unsigned c) {	if (m_overrideWithUnicode) m_UnicodeCallback(c); }
 		void MouseMove(glm::ivec2 pos);
 		void LMB(bool down);
 		void RMB(bool down);
