@@ -2,7 +2,11 @@
 
 #include "../Math.h"
 #include "../Graphics/GUI/Event.h"
+#include "Context.h"
+
 #define NUM_KEYS 255
+
+#define CLICK_TIME 1.0f/5
 
 namespace garm {
 
@@ -12,8 +16,15 @@ namespace garm {
 
 	public:
 		typedef InputHandler notifier_type;
-		virtual bool MouseLClick(InputHandler* src, glm::ivec2) { return true; }
-		virtual bool MouseRClick(InputHandler* src, glm::ivec2) { return true; }
+
+		virtual bool MouseLDown(InputHandler* src, glm::ivec2 point) { return true; }
+		virtual bool MouseRDown(InputHandler* src, glm::ivec2 point) { return true; }
+
+		virtual bool MouseLUp(InputHandler* src, glm::ivec2 point) { return true; }
+		virtual bool MouseRUp(InputHandler* src, glm::ivec2 point) { return true; }
+
+		virtual bool MouseLClick(InputHandler* src, glm::ivec2 point) { return true; }
+		virtual bool MouseRClick(InputHandler* src, glm::ivec2 point) { return true; }
 	};
 
 	class InputHandler : public event::Notifier<InputListener> {
@@ -30,15 +41,21 @@ namespace garm {
 		struct Mouse {
 			struct MouseButton{
 				bool isDown = false;
+				float lastDown = 0;
+				float lastUp = 0;
 			} m_lmb, m_rmb;
 
 			glm::ivec2 mousePos;
 			glm::ivec2 lastMouseMove;
+
 			void MoveMouse(glm::ivec2 pos) {
 				lastMouseMove = mousePos - pos;
-				mousePos = pos; }
-			void LMB(bool down) { m_lmb.isDown = down; }
-			void RMB(bool down) { m_rmb.isDown = down; }
+				mousePos = pos;
+			}
+
+			void LMB(bool down);
+			void RMB(bool down);
+
 			bool IsLMBDown() { return m_lmb.isDown; }
 			bool IsRMBDown() { return m_rmb.isDown; }
 		} m_mouse;
@@ -56,16 +73,8 @@ namespace garm {
 		inline void KeyDown(short key) { m_keys[key].isDown = true;	}
 		inline void KeyUp(short key) { m_keys[key].isDown = false; }
 		inline void MouseMove(glm::ivec2 pos) { m_mouse.MoveMouse(pos); }
-		inline void LMB(bool down) {
-			if (down && !m_mouse.IsLMBDown())
-				Notify(&InputListener::MouseLClick, m_mouse.mousePos);
-			m_mouse.LMB(down);
-		}
-		inline void RMB(bool down) {
-			if (down && !m_mouse.IsRMBDown())
-				Notify(&InputListener::MouseRClick, m_mouse.mousePos);
-			m_mouse.RMB(down);
-		}
+		void LMB(bool down);
+		void RMB(bool down);
 	};
 
 #define InputHandler_M garm::InputHandler::GetInstance()

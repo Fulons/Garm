@@ -20,6 +20,8 @@ LRESULT CALLBACK MainWndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 
 namespace garm {
 
+	Context* Context::m_currentContext = nullptr;
+
 	Context::Context(HINSTANCE hInstance)
 		: m_hAppInstance(hInstance)
 	{
@@ -28,6 +30,7 @@ namespace garm {
 		m_appTitle = "OPENGL APP";
 		m_windowStyle = WS_OVERLAPPED | WS_SIZEBOX | WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX;	//WS_POPUP
 		g_Context = this;
+		m_currentContext = this;
 	}
 
 	int Context::Run(){
@@ -49,6 +52,7 @@ namespace garm {
 				__int64 curTime = 0;
 				QueryPerformanceCounter((LARGE_INTEGER*)&curTime);
 				float deltaTime = (curTime - prevTime) * secondsPerCount;
+				m_currentTime = curTime * secondsPerCount;
 				//Update
 				Update(deltaTime);
 				Render();

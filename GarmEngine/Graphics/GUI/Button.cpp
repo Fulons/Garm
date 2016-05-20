@@ -17,4 +17,9 @@ namespace garm{namespace gui{
 		renderer->PopPosition();
 	}
 
+	bool Button::MouseLClick(glm::ivec2 point){
+		m_callback();
+		return true;
+	}
+
 } }

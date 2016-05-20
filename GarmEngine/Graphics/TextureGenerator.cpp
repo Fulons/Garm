@@ -1,12 +1,13 @@
 #include "TextureGenerator.h"
 #include "Texture.h"
+#include "../Math.h"
 #include <vector>
+
+using garm::math::lerp;
 
 namespace garm { namespace graphics{
 
-	inline float lerp(float v0, float v1, float t) {
-		return v0 + t*(v1 - v0);
-	}
+	
 
 	TextureOld* TextureGenerator::MakeDiagTexture1(GLubyte byteIntesity1, GLubyte byteIntesity2){
 		GLubyte image[] = {

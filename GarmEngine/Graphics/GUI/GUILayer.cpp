@@ -22,6 +22,8 @@ namespace garm { namespace graphics{
 		m_fontShader->SetUniform("t", 0);
 
 		m_renderer = new GUIRenderer;
+
+		Listener<InputListener>::AttachTo(InputHandler_M);
 	}
 
 	void GUILayer::AddWindow(Window* window){
@@ -40,6 +42,72 @@ namespace garm { namespace graphics{
 		m_fontShader->Use();
 		m_renderer->RenderFont(m_fontShader);
 		glDepthRange(-1, 1);
+	}
+
+	bool GUILayer::MouseLDown(InputHandler * src, glm::ivec2 point){
+		point = glm::ivec2(point.x, PROJECTION_Y_SIZE - point.y);
+		for (auto i : m_windows) {
+			if (i->ContainsInGlobalCoordinate(point)) {
+				i->MouseLDown(point);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool GUILayer::MouseRDown(InputHandler * src, glm::ivec2 point){
+		point = glm::ivec2(point.x, PROJECTION_Y_SIZE - point.y);
+		for (auto i : m_windows) {
+			if (i->ContainsInGlobalCoordinate(point)) {
+				i->MouseRDown(point);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool GUILayer::MouseLUp(InputHandler * src, glm::ivec2 point){
+		point = glm::ivec2(point.x, PROJECTION_Y_SIZE - point.y);
+		for (auto i : m_windows) {
+			if (i->ContainsInGlobalCoordinate(point)) {
+				i->MouseLUp(point);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool GUILayer::MouseRUp(InputHandler * src, glm::ivec2 point){
+		point = glm::ivec2(point.x, PROJECTION_Y_SIZE - point.y);
+		for (auto i : m_windows) {
+			if (i->ContainsInGlobalCoordinate(point)) {
+				i->MouseRUp(point);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool GUILayer::MouseLClick(InputHandler * src, glm::ivec2 point){
+		point = glm::ivec2(point.x, PROJECTION_Y_SIZE - point.y);
+		for (auto i : m_windows) {
+			if (i->ContainsInGlobalCoordinate(point)) {
+				i->MouseLClick(point);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	bool GUILayer::MouseRClick(InputHandler * src, glm::ivec2 point){
+		point = glm::ivec2(point.x, PROJECTION_Y_SIZE - point.y);
+		for (auto i : m_windows) {
+			if (i->ContainsInGlobalCoordinate(point)) {
+				i->MouseRClick(point);
+				return false;
+			}
+		}
+		return true;
 	}
 
 } }

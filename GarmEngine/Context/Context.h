@@ -24,6 +24,11 @@ namespace garm {
 
 		UINT GetClientWidth() { return m_clientWidth; }
 		UINT GetClientHeight() { return m_clientHeight; }
+		float GetCurentTime() { return m_currentTime; }
+
+		//might want to limit access to the context like this later on
+		//make the getcurtime functions and so on static instead
+		static Context* GetContext() { return m_currentContext; }
 
 	private:
 		HWND			m_hAppWnd = nullptr;
@@ -36,11 +41,14 @@ namespace garm {
 		char*			m_appTitle;
 		float			m_FPS;
 		unsigned int	m_frameCount = 0;
+		float			m_currentTime;
 
 		bool InitWindow();
 		bool InitGL();
 		void Shutdown();
-		void CalculateFPS(float dt);		
+		void CalculateFPS(float dt);
+
+		static Context* m_currentContext;
 	};
 
 }

@@ -11,7 +11,7 @@
 #define GUI_WIDGET_STD_MOUSEFOCUS	false
 #include <iostream>
 namespace garm { namespace gui {
-
+	class InputHandler;
 	class Widget;
 
 	class WidgetListener {
@@ -46,12 +46,27 @@ namespace garm { namespace gui {
 		void SetPosition(glm::ivec2 pos) { m_pos = pos; }
 		void SetSize(glm::ivec2 size) { m_size = size; }
 
-		bool Visible() { return m_visible; Notify(&WidgetListener::MouseClick, glm::ivec2(2,2)); }
-		bool Enabled() { return m_enabled; }
-		bool Focused() { return m_focused; }
-		bool MouseFocus() { return m_mouseFocus; }
+		bool Visible() const { return m_visible; }
+		bool Enabled() const { return m_enabled; }
+		bool Focused() const { return m_focused; }
+		bool MouseFocus() const { return m_mouseFocus; }
 
-		virtual bool Contains(glm::ivec2 point);
+		virtual bool ContainsInParentCoordinate(glm::ivec2 point) const;
+		virtual bool ContainsInGlobalCoordinate(glm::ivec2 point) const;
+		virtual bool ContainsInLocalCoordinate(glm::ivec2 point) const;
+		virtual glm::ivec2 ParentToWidgetCoordinate(glm::ivec2 point) const;
+		virtual glm::ivec2 GlobalToWidgetCoordinate(glm::ivec2 point) const;
+		virtual glm::ivec2 GetGlobalPosition() const;
+
+		virtual bool MouseLDown(glm::ivec2 point);
+		virtual bool MouseRDown(glm::ivec2 point);
+
+		virtual bool MouseLUp(glm::ivec2 point);
+		virtual bool MouseRUp(glm::ivec2 point);
+
+		virtual bool MouseLClick(glm::ivec2 point);
+		virtual bool MouseRClick(glm::ivec2 point);
+
 		virtual void Render(graphics::GUIRenderer* renderer);
 	};
 

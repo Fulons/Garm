@@ -12,6 +12,7 @@ namespace garm { namespace gui {
 	public:
 		Button(const Widget* parent, glm::ivec2 pos, glm::ivec2 size, const std::function<void()> &callBack,  graphics::TextureFragmentType type);
 		void Render(graphics::GUIRenderer* renderer) override;
+		virtual bool MouseLClick(glm::ivec2 point) override;
 	};
 
 } }

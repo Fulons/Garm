@@ -26,12 +26,83 @@ namespace garm { namespace gui {
 		}
 	}
 
-	bool Widget::Contains(glm::ivec2 point) {
-		if (point.x < m_pos.x) return false;
-		if (point.x > m_pos.x + m_size.x) return false;
-		if (point.y < m_pos.y) return false;
-		if (point.y > m_pos.y + m_size.y) return false;
-		return true;
+	bool Widget::ContainsInParentCoordinate(glm::ivec2 point) const {
+		return math::pointInRect(point, m_size, m_pos);
+	}
+
+	bool Widget::ContainsInGlobalCoordinate(glm::ivec2 point) const{
+		return math::pointInRect(point , m_size, m_pos);
+	}
+
+	bool Widget::ContainsInLocalCoordinate(glm::ivec2 point) const{
+		return math::pointInRect(point, m_size);
+	}
+
+	glm::ivec2 Widget::ParentToWidgetCoordinate(glm::ivec2 point) const{
+		return point - m_parent->m_size;
+	}
+
+	glm::ivec2 Widget::GlobalToWidgetCoordinate(glm::ivec2 point) const{
+		return point - GetGlobalPosition();
+	}
+
+	glm::ivec2 Widget::GetGlobalPosition() const{
+		if (m_parent != nullptr) return m_parent->GetGlobalPosition() + m_pos;
+		else return m_pos;
+	}
+
+	bool Widget::MouseLDown(glm::ivec2 point){
+		point -= m_pos;
+		for (auto i : m_children) {
+			if (i->ContainsInParentCoordinate(point))
+				if (i->MouseLDown(point)) return true;
+		}
+		return false;
+	}
+
+	bool Widget::MouseRDown(glm::ivec2 point){
+		point -= m_pos;
+		for (auto i : m_children) {
+			if (i->ContainsInParentCoordinate(point))
+				if (i->MouseRDown(point)) return true;
+		}
+		return false;
+	}
+
+	bool Widget::MouseLUp(glm::ivec2 point){
+		point -= m_pos;
+		for (auto i : m_children) {
+			if (i->ContainsInParentCoordinate(point))
+				if (i->MouseLUp(point)) return true;
+		}
+		return false;
+	}
+
+	bool Widget::MouseRUp(glm::ivec2 point){
+		point -= m_pos;
+		for (auto i : m_children) {
+			if (i->ContainsInParentCoordinate(point))
+				if (i->MouseRUp(point)) return true;
+		}
+		return false;
+	}
+
+	bool Widget::MouseLClick(glm::ivec2 point){
+		point -= m_pos;
+		for (auto i : m_children) {
+			if (i->ContainsInParentCoordinate(point))
+				if(i->MouseLClick(point)) return true;
+		}
+		return false;
+	}
+
+	bool Widget::MouseRClick(glm::ivec2 point){
+		point -= m_pos;
+		for (auto i : m_children) {
+			if (i->ContainsInParentCoordinate(point))
+				if (i->MouseRClick(point)) return true;
+		}
+		return false;
 	}
 
 	void Widget::Render(GUIRenderer* renderer) {
