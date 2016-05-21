@@ -17,7 +17,7 @@ namespace garm { namespace gui {
 	class WidgetListener {
 	public:
 		typedef Widget notifier_type;		
-		virtual bool MouseClick(Widget* src, glm::ivec2 pos) { return true; }
+		virtual bool MinimizedToHeader(Widget* src) { return true; }
 	};
 
 	//class ListenListener : public event::Listener<WidgetListener> {
@@ -35,6 +35,7 @@ namespace garm { namespace gui {
 		bool m_focused, m_mouseFocus;
 		std::vector<Widget*> m_children;
 		glm::ivec2 m_pos, m_size;
+		Widget* GetWindow() { if (m_parent == nullptr) return this; return m_parent->GetWindow(); }
 	public:
 		//virtual void Widget_Event(Widget* src, int data) override {std::cout << "Wof " << std::endl;}
 		Widget(Widget* parent);

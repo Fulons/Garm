@@ -29,6 +29,7 @@ namespace garm {
 		//might want to limit access to the context like this later on
 		//make the getcurtime functions and so on static instead
 		static Context* GetContext() { return m_currentContext; }
+		std::string GetClipboardText();
 
 	private:
 		HWND			m_hAppWnd = nullptr;

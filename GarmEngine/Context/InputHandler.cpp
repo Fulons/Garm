@@ -19,7 +19,7 @@ namespace garm {
 	}
 
 	bool InputHandler::TakeInUnicode(const std::function<void(unsigned)> &func, void * who) {
-		if (who != nullptr) return false;
+		if (m_whoOverridesUnicode != nullptr) return false;
 		m_UnicodeCallback = func;
 		m_overrideWithUnicode = true;
 		m_whoOverridesUnicode = who;
@@ -29,7 +29,7 @@ namespace garm {
 	bool InputHandler::StopTakingUnicode(void * who) {
 		if (m_whoOverridesUnicode == who) {
 			m_overrideWithUnicode = false;
-			who = nullptr;
+			m_whoOverridesUnicode = nullptr;
 			return true;
 		}
 		return false;

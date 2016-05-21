@@ -68,6 +68,19 @@ namespace garm {
 		Shutdown();
 		return static_cast<int>(msg.wParam);
 	}
+	//TODO: make error messages
+	std::string Context::GetClipboardText(){
+		if (!OpenClipboard(nullptr)) return "";
+		HANDLE hData = GetClipboardData(CF_TEXT);
+		if (hData == nullptr) return "";
+		char* txt = static_cast<char*>(GlobalLock(hData));
+		if (txt == nullptr) return "";
+		std::string ret(txt);
+		GlobalUnlock(hData);
+		CloseClipboard();
+		return ret;
+		
+	}
 
 	LRESULT Context::MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
@@ -76,6 +89,7 @@ namespace garm {
 			PostQuitMessage(0);
 			return 0;
 		case WM_CHAR:
+			InputHandler_M->UnicodeIn(wParam);
 			return 0;
 		case WM_MOUSEMOVE:
 			InputHandler_M->MouseMove(glm::ivec2(LOWORD(lParam), HIWORD(lParam)));

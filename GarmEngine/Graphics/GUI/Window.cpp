@@ -29,6 +29,7 @@ namespace garm { namespace gui {
 
 	void Window::ToggleHeaderOnly(){
 		m_headerOnly = !m_headerOnly;
+		if (!m_headerOnly) Notify(&WidgetListener::MinimizedToHeader);
 	}
 
 	void Window::Render(GUIRenderer* renderer){

@@ -136,6 +136,7 @@
     <ClCompile Include="Graphics\GUI\GUIRenderer.cpp" />
     <ClCompile Include="Graphics\GUI\header.cpp" />
     <ClCompile Include="Graphics\GUI\TextField.cpp" />
+    <ClCompile Include="Graphics\GUI\TextInputField.cpp" />
     <ClCompile Include="Graphics\GUI\Widget.cpp" />
     <ClCompile Include="Graphics\GUI\Window.cpp" />
     <ClCompile Include="Graphics\Layer.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Graphics\GUI\header.h" />
     <ClInclude Include="Graphics\GUI\Event.h" />
     <ClInclude Include="Graphics\GUI\TextField.h" />
+    <ClInclude Include="Graphics\GUI\TextInputField.h" />
     <ClInclude Include="Graphics\GUI\Widget.h" />
     <ClInclude Include="Graphics\GUI\Window.h" />
     <ClInclude Include="Graphics\Material.h" />
