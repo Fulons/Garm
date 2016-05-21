@@ -35,22 +35,23 @@ namespace garm{ namespace graphics{
 	}
 	
 	void FontRenderable::PushBack(const std::string& str){
-		if(str.size() == 1)
-			if (m_renderTo < m_string.size()) {
-				if (m_string[m_renderTo] == str[0]) {
-					++m_renderTo;
-					return;
-				}
-				else {
-					m_string[m_renderTo] = str[0];
-					UpdateCharBuffer(m_renderTo);	//Calling untested scary function
-					++m_renderTo;
-					return;
-				}
-			}
+		//TODO: optimization checking, hade some bugs...will fix later
+		//if (str.size() == 1) {
+		//	if (m_renderTo < m_string.size()) {
+		//		if (m_string[m_renderTo] == str[0]) {
+		//			++m_renderTo;
+		//			return;
+		//		}
+		//		else {
+		//			m_string[m_renderTo] = str[0];
+		//			UpdateCharBuffer(m_renderTo);
+		//			++m_renderTo;
+		//			return;
+		//		}
+		//	}
+		//}
 		m_string = m_string.substr(0, m_renderTo);
 		AppendToBuffer(str);
-		++m_renderTo;
 	}
 
 	void FontRenderable::RefreshBuffer(){
@@ -122,6 +123,7 @@ namespace garm{ namespace graphics{
 		Character c = FontManager_M->GetCharacter(m_string[index], m_fontSize);
 		std::vector<FontVertex> verts;
 		MakeCharVerts(verts, c, m_advance[index], textureSize);
+
 		if (((c.advance >> 6) == m_advance[index] - m_advance[index - 1]) ||
 			(m_string.size() == index + 1)) {
 			m_buffer->EditData(index * sizeof(FontVertex) * 4, sizeof(FontVertex) * 4, verts.data());
@@ -139,6 +141,7 @@ namespace garm{ namespace graphics{
 
 	void FontRenderable::AppendToBuffer(const std::string& str){
 		m_string += str;
+		m_renderTo += str.size();
 		MakeBuffer();
 	}
 	
