@@ -9,7 +9,8 @@ namespace garm { namespace gui{
 	}
 
 	bool TextInputField::MouseLClick(glm::ivec2 point){
-		InputHandler_M->TakeInUnicode([this](unsigned c) { this->UnicodeIn(c); }, this);
+		if (InputHandler_M->TakeInUnicode([this](unsigned c) { this->UnicodeIn(c); }, this))
+			m_takingInUnicode = true;
 		return true;
 	}
 
@@ -24,10 +25,12 @@ namespace garm { namespace gui{
 				}
 				break;
 			case 27: //escape
-				InputHandler_M->StopTakingUnicode(this);
+				if(m_takingInUnicode)
+					InputHandler_M->StopTakingUnicode(this);
 				break;
 			case 13: //carriage return
-				InputHandler_M->StopTakingUnicode(this);
+				if(m_takingInUnicode)
+					InputHandler_M->StopTakingUnicode(this);
 				break;
 			case 22: { //paste
 				std::string pasteStr;
@@ -46,6 +49,12 @@ namespace garm { namespace gui{
 			m_string.push_back(c);
 			m_fontRenderable->PushBack(std::string(1, c));			
 		}
+	}
+
+	bool TextInputField::MinimizedToHeader(Widget * src){
+		if(m_takingInUnicode)
+			InputHandler_M->StopTakingUnicode(this);
+		return false;
 	}
 
 } }

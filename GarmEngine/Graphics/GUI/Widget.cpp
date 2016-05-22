@@ -6,12 +6,16 @@ namespace garm { namespace gui {
 
 	Widget::Widget(Widget * parent)
 	: m_parent(parent), m_visible(GUI_WIDGET_STD_VISIBILITY), m_enabled(GUI_WIDGET_STD_ENABLE),
-	m_focused(GUI_WIDGET_STD_FOCUS), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUS), event::Notifier<WidgetListener>(){}
+	m_focused(GUI_WIDGET_STD_FOCUS), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUS), event::Notifier<WidgetListener>(){
+		if (parent != nullptr) AttachTo(parent);
+	}
 	
 	Widget::Widget(Widget * parent, glm::ivec2 pos, glm::ivec2 size)
 	: m_parent(parent), m_pos(pos), m_size(size),
 	m_visible(GUI_WIDGET_STD_VISIBILITY), m_enabled(GUI_WIDGET_STD_ENABLE),
-	m_focused(GUI_WIDGET_STD_FOCUS), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUS), event::Notifier<WidgetListener>(){}
+	m_focused(GUI_WIDGET_STD_FOCUS), m_mouseFocus(GUI_WIDGET_STD_MOUSEFOCUS), event::Notifier<WidgetListener>(){
+		if (parent != nullptr) AttachTo(parent);
+	}
 
 	void Widget::AddChild(Widget * child){
 		m_children.push_back(child);
@@ -31,7 +35,8 @@ namespace garm { namespace gui {
 	}
 
 	bool Widget::ContainsInGlobalCoordinate(glm::ivec2 point) const{
-		return math::pointInRect(point , m_size, m_pos);
+		if(m_parent == nullptr) return math::pointInRect(point, m_size, m_pos);
+		else return m_parent->ContainsInGlobalCoordinate(point);
 	}
 
 	bool Widget::ContainsInLocalCoordinate(glm::ivec2 point) const{

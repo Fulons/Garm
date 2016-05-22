@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "VertexArray.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include "Shader.h"

@@ -28,6 +28,9 @@ namespace garm {
 		void ToggleHeaderOnly();
 		const std::string& GetName() { return m_name; }
 		virtual void Render(graphics::GUIRenderer* renderer) override;
+		virtual bool ContainsInParentCoordinate(glm::ivec2 point) const override;
+		virtual bool ContainsInGlobalCoordinate(glm::ivec2 point) const override;
+		virtual bool ContainsInLocalCoordinate(glm::ivec2 point) const override;
 	};
 
 	

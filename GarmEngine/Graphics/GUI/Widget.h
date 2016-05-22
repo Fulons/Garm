@@ -20,14 +20,6 @@ namespace garm { namespace gui {
 		virtual bool MinimizedToHeader(Widget* src) { return true; }
 	};
 
-	//class ListenListener : public event::Listener<WidgetListener> {
-	//public:
-	//	void foo(Widget* e) { AttachTo((event::Notifier<WidgetListener>*)e); }
-	//	virtual void Widget_Event(Widget* src, int i) override{
-	//		std::cout << "Moo " << std::endl;
-	//	}
-	//};
-
 	class Widget : public event::Notifier<WidgetListener>, public event::Listener<WidgetListener> {
 	protected:
 		Widget* m_parent = nullptr;
@@ -60,6 +52,8 @@ namespace garm { namespace gui {
 		virtual glm::ivec2 ParentToWidgetCoordinate(glm::ivec2 point) const;
 		virtual glm::ivec2 GlobalToWidgetCoordinate(glm::ivec2 point) const;
 		virtual glm::ivec2 GetGlobalPosition() const;
+		virtual glm::ivec2 GetPos() const { return m_pos; }
+		virtual glm::ivec2 GetSize() const { return m_size; }
 
 		virtual bool MouseLDown(glm::ivec2 point);
 		virtual bool MouseRDown(glm::ivec2 point);

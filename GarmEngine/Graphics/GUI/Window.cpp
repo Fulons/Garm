@@ -29,7 +29,7 @@ namespace garm { namespace gui {
 
 	void Window::ToggleHeaderOnly(){
 		m_headerOnly = !m_headerOnly;
-		if (!m_headerOnly) Notify(&WidgetListener::MinimizedToHeader);
+		if (m_headerOnly) Notify(&WidgetListener::MinimizedToHeader);
 	}
 
 	void Window::Render(GUIRenderer* renderer){
@@ -44,6 +44,24 @@ namespace garm { namespace gui {
 		else m_header->Render(renderer);
 
 		renderer->PopPosition();
+	}
+
+	bool Window::ContainsInParentCoordinate(glm::ivec2 point) const{
+		if(m_headerOnly)
+			return math::pointInRect(point, m_header->GetSize(), m_header->GetPos() + m_pos);
+		return Widget::ContainsInParentCoordinate(point);
+	}
+
+	bool Window::ContainsInGlobalCoordinate(glm::ivec2 point) const{
+		if (m_headerOnly)
+			return math::pointInRect(point, m_header->GetSize(), m_header->GetPos() + m_pos);
+		return math::pointInRect(point, m_size, m_pos);
+	}
+
+	bool Window::ContainsInLocalCoordinate(glm::ivec2 point) const{
+		if (m_headerOnly)
+			return math::pointInRect(point, m_header->GetSize(), m_header->GetPos());
+		return Widget::ContainsInLocalCoordinate(point);
 	}
 
 } }
