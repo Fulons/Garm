@@ -1,7 +1,7 @@
 #pragma once
 #include "TextField.h"
 
-namespace garm { namespace gui{
+namespace garm { namespace gui{	
 
 	class TextInputField : public TextField {
 		bool m_takingInUnicode = false;

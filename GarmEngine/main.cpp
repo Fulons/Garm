@@ -99,13 +99,13 @@ bool TestApp::Init(){
 	//fontRenderable->SetString("new");
 	//fontRenderable->SetColor({ glm::vec4(0.2f, 0.8f, 0.6f, 1.0f) });
 	//fontRenderable->SetFontSize(48);
-	//fontRenderable->RefreshBuffer();m_projectionMatrix
+	//fontRenderable->RefreshBuffer();
 
 	guiLayer = new garm::graphics::GUILayer(m_projectionMatrix);
-	window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
+	//window = new garm::gui::Window("Window", glm::ivec2(100, 100), glm::ivec2(200, 350), garm::gui::GUI_WINDOW_HEADER);
+	//guiLayer->AddWindow(window);
 	console = new garm::gui::Window("Console", glm::ivec2(400, 100), glm::ivec2(300, 150), garm::gui::GUI_WINDOW_HEADER);
 	guiLayer->AddWindow(console);
-	guiLayer->AddWindow(window);
 	textField = new garm::gui::TextInputField(console, glm::ivec2(2, 2), glm::ivec2(296, 50));
 	console->AddChild(textField);
 
@@ -129,7 +129,7 @@ void TestApp::Render() {
 	guiLayer->m_fontShader->Use();
 	guiLayer->m_fontShader->SetUniform("mouse", mousepos);
 	mousepos = glm::vec2(InputHandler_M->GetMousePos().x, -InputHandler_M->GetMousePos().y + GetClientHeight());
-	fontRenderable->Render(guiLayer->m_fontShader);
+	//fontRenderable->Render(guiLayer->m_fontShader);
 
 
 	// draw font texture onto screen, remember to manually set texture depth in shader

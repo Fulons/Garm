@@ -21,6 +21,10 @@ namespace garm { namespace gui {
 		m_children.push_back(child);
 	}
 
+	void Widget::AddChildFront(Widget* child) {
+		m_children.insert(m_children.begin(), child);
+	}
+
 	void Widget::RemoveChild(Widget * child) {
 		for (auto it = m_children.begin(); it != m_children.end(); it++) {
 			if (*it == child) {
@@ -59,8 +63,10 @@ namespace garm { namespace gui {
 	bool Widget::MouseLDown(glm::ivec2 point){
 		point -= m_pos;
 		for (auto i : m_children) {
-			if (i->ContainsInParentCoordinate(point))
+			if (i->ContainsInParentCoordinate(point)) {
 				if (i->MouseLDown(point)) return true;
+				return true;
+			}
 		}
 		return false;
 	}

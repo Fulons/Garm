@@ -35,6 +35,7 @@ namespace garm { namespace gui {
 		Widget& operator=(const Widget& o){}
 		virtual ~Widget(){}
 		void AddChild(Widget* child);
+		void AddChildFront(Widget* child);	//inefficient should make second vector to store "queue jumpers"
 		void RemoveChild(Widget* child);
 		void SetPosition(glm::ivec2 pos) { m_pos = pos; }
 		void SetSize(glm::ivec2 size) { m_size = size; }
