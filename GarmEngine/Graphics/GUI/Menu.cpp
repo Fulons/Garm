@@ -7,4 +7,12 @@ namespace garm { namespace gui{
 
 	}
 
+	void Menu::SetCallBack(const std::function<void(unsigned)>& callback){
+
+	}
+
+	void Menu::Render(graphics::GUIRenderer * renderer){
+
+	}
+
 } }

@@ -47,6 +47,7 @@ namespace garm { namespace event{
 		std::vector<listener_type*> m_listeners;
 	protected:
 		Notifier(){}
+		//Notifier(const self_type&) = default;
 		template<typename func_type>
 		void Notify(func_type func) {
 			typedef Event<interface_type, func_type, c_notifier_type*> event_type;
@@ -84,7 +85,6 @@ namespace garm { namespace event{
 		}
 		typedef Notifier<interface_type> self_type;
 		typedef typename interface_type::notifier_type c_notifier_type;
-		Notifier(const self_type&);
 		self_type &operator=(const self_type&);
 		void DoEvent(const AbstractEvent<interface_type>& event) {
 			for (size_t i = 0; i < m_listeners.size(); i++)

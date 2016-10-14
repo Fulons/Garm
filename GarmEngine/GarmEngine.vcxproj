@@ -148,6 +148,7 @@
     <ClCompile Include="Graphics\TextureGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
+    <ClCompile Include="New Stuff\Renderere.cpp" />
     <ClCompile Include="Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +178,7 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="Graphics\Renderer.h" />
     <ClInclude Include="Graphics\Notes.h" />
+    <ClInclude Include="New Stuff\Renderere.h" />
     <ClInclude Include="platform.h" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Utility.h" />

@@ -10,8 +10,10 @@
 #include "Graphics/GUI/Window.h"
 #include "Graphics/GUI/GUIRenderer.h"
 #include "Graphics/GUI/GUILayer.h"
-	#include "Graphics/GUI/TextField.h"
-	#include "Graphics/GUI/TextInputField.h"
+#include "Graphics/GUI/TextField.h"
+#include "Graphics/GUI/TextInputField.h"
+
+#include "New Stuff/Renderere.h"
 
 #include <iostream>
 
@@ -29,6 +31,9 @@ public:
 	void Render() override;
 	//LRESULT MsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	garm::graphics::Shader* shader;
+	garm::graphics::TransformComponentManager transformComponents;
+	garm::graphics::MotionComponentManager motionComponents;
+	garm::graphics::EntityManager entities;
 };
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
